@@ -12,12 +12,14 @@ import java.time.LocalDateTime;
 @Builder
 public class ClubDto {
 
-    private long id;
-    @NotEmpty(message = "Club title should not be empty!")
+    private Long id;
+    @NotEmpty(message = "Book title should not be empty!")
     private String title;
+    @NotEmpty(message = "Book author should not be empty!")
+    private String author;
     @NotEmpty(message = "Photo link should not be empty!")
     private String photoUrl;
-    @NotEmpty(message = "Club content should not be empty!")
+    @NotEmpty(message = "Book content should not be empty!")
     private String content;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;

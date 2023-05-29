@@ -54,21 +54,22 @@ public class ClubImpl implements ClubService {
         return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
     }
 
-    private Club mapToClub(ClubDto club) {
-        if(club == null) {
+    private Club mapToClub(ClubDto clubDto) {
+        if(clubDto == null) {
             return null;
         }
 
-        Club clubDto = Club.builder()
-                .id(club.getId())
-                .title(club.getTitle())
-                .photoUrl(club.getPhotoUrl())
-                .content(club.getContent())
-                .createdOn(club.getCreatedOn())
-                .updatedOn(club.getUpdatedOn())
+        Club club = Club.builder()
+                .id(clubDto.getId())
+                .author(clubDto.getAuthor())
+                .title(clubDto.getTitle())
+                .photoUrl(clubDto.getPhotoUrl())
+                .content(clubDto.getContent())
+                .createdOn(clubDto.getCreatedOn())
+                .updatedOn(clubDto.getUpdatedOn())
                 .build();
 
-        return clubDto;
+        return club;
     }
 
     private ClubDto mapToClubDto(Club club) {
@@ -78,6 +79,7 @@ public class ClubImpl implements ClubService {
 
         ClubDto clubDto = ClubDto.builder()
                 .id(club.getId())
+                .author(club.getAuthor())
                 .title(club.getTitle())
                 .photoUrl(club.getPhotoUrl())
                 .content(club.getContent())

@@ -19,7 +19,8 @@ import java.time.LocalDateTime;
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    private String author;
     private String title;
     private String photoUrl;
     private String content;

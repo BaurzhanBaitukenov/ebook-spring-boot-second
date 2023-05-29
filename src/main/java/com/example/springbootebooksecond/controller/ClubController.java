@@ -2,8 +2,11 @@ package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.dto.ClubDto;
 import com.example.springbootebooksecond.models.Club;
+import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.ClubService;
+import com.example.springbootebooksecond.service.UserService;
 import jakarta.validation.Valid;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

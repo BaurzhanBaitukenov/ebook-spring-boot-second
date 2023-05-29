@@ -4,6 +4,7 @@ import com.example.springbootebooksecond.dto.RegistrationDto;
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ public class AuthController {
     public AuthController(UserService userService) {
         this.userService = userService;
     }
+
 
     //register
     @GetMapping("/register")

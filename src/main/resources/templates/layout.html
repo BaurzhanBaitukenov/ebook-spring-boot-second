@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link th:href="@{/css/styles.css}" rel="stylesheet">
-    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">RunGroup</title>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Ebook</title>
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container px-5">
-        <a class="navbar-brand" th:href="@{/}">RunGroup</a>
+        <a class="navbar-brand" th:href="@{/}">Ebook</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/clubs}">Find Clubs</a></li>
-                <li class="nav-item"><a class="nav-link" href="pricing.html">Directory</a></li>
-                <li class="nav-item dropdown">
+                <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/register}">Register</a></li>
+<!--                sec:authorize="isAuthenticated()"-->
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Blog</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-                        <li><a class="dropdown-item" th:href="@{clubs/new}">Create Club</a></li>
-                        <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
-                        <li><a class="dropdown-item" th:href="@{/register}">Register</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')" ><a class="dropdown-item" th:href="@{/clubs/new}">Create Club</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a class="dropdown-item" th:href="@{/users}">List of Users</a></li>
+                        <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                     </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownPortfolio" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Portfolio</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                        <li><a class="dropdown-item" href="portfolio-overview.html">Portfolio Overview</a></li>
-                        <li><a class="dropdown-item" href="portfolio-item.html">Portfolio Item</a></li>
-                    </ul>
+<!--                    sec:authorize="hasAuthority('ADMIN')"-->
                 </li>
             </ul>
         </div>
