@@ -1,9 +1,9 @@
 package com.example.springbootebooksecond.service.impl;
 
-import com.example.springbootebooksecond.dto.ClubDto;
-import com.example.springbootebooksecond.models.Club;
-import com.example.springbootebooksecond.repository.ClubRepository;
-import com.example.springbootebooksecond.service.ClubService;
+import com.example.springbootebooksecond.dto.BookDto;
+import com.example.springbootebooksecond.models.Book;
+import com.example.springbootebooksecond.repository.BookRepository;
+import com.example.springbootebooksecond.service.BookService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -11,55 +11,55 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ClubImpl implements ClubService {
+public class BookImpl implements BookService {
 
-    private final ClubRepository clubRepository;
+    private final BookRepository bookRepository;
 
-    public ClubImpl(ClubRepository clubRepository) {
-        this.clubRepository = clubRepository;
+    public BookImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
     @Override
-    public List<ClubDto> findAllClubs() {
-        List<Club> clubs = clubRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+    public List<BookDto> findAllBooks() {
+        List<Book> clubs = bookRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
     }
 
     @Override
-    public Club saveClub(ClubDto clubDto) {
-        Club club = mapToClub(clubDto);
-        return clubRepository.save(club);
+    public Book saveBook(BookDto clubDto) {
+        Book club = mapToClub(clubDto);
+        return bookRepository.save(club);
     }
 
     @Override
-    public ClubDto findClubById(long clubId) {
-        Club club = clubRepository.findById(clubId).get();
+    public BookDto findBookById(long clubId) {
+        Book club = bookRepository.findById(clubId).get();
         return mapToClubDto(club);
     }
 
     @Override
-    public void updateClub(ClubDto clubDto) {
-        Club club = mapToClub(clubDto);
-        clubRepository.save(club);
+    public void updateBook(BookDto clubDto) {
+        Book club = mapToClub(clubDto);
+        bookRepository.save(club);
     }
 
     @Override
     public void delete(long clubId) {
-        clubRepository.deleteById(clubId);
+        bookRepository.deleteById(clubId);
     }
 
     @Override
-    public List<ClubDto> searchClubs(String query) {
-        List<Club> clubs = clubRepository.searchClubs(query);
+    public List<BookDto> searchBooks(String query) {
+        List<Book> clubs = bookRepository.searchBooks(query);
         return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
     }
 
-    private Club mapToClub(ClubDto clubDto) {
+    private Book mapToClub(BookDto clubDto) {
         if(clubDto == null) {
             return null;
         }
 
-        Club club = Club.builder()
+        Book club = Book.builder()
                 .id(clubDto.getId())
                 .author(clubDto.getAuthor())
                 .title(clubDto.getTitle())
@@ -72,12 +72,12 @@ public class ClubImpl implements ClubService {
         return club;
     }
 
-    private ClubDto mapToClubDto(Club club) {
+    private BookDto mapToClubDto(Book club) {
         if(club == null) {
             return null;
         }
 
-        ClubDto clubDto = ClubDto.builder()
+        BookDto clubDto = BookDto.builder()
                 .id(club.getId())
                 .author(club.getAuthor())
                 .title(club.getTitle())

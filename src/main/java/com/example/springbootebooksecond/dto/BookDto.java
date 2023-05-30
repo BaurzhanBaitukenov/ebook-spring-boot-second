@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class ClubDto {
+public class BookDto {
 
     private Long id;
     @NotEmpty(message = "Book title should not be empty!")

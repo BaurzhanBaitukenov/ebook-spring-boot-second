@@ -3,8 +3,8 @@ package com.example.springbootebooksecond.controller;
 import com.example.springbootebooksecond.dto.RegistrationDto;
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/save")
-    public String register(@Valid @ModelAttribute("user") RegistrationDto user,
+    public String register(HttpSession session, @Valid @ModelAttribute("user") RegistrationDto user,
                            BindingResult result, Model model) {
         UserEntity existingUserEmail = userService.findByEmail(user.getEmail());
         if(existingUserEmail != null && existingUserEmail.getEmail() != null && !existingUserEmail.getEmail().isEmpty()) {
@@ -48,7 +48,8 @@ public class AuthController {
             return "registerAndLogin/register";
         }
         userService.saveUser(user);
-        return "redirect:/clubs?success";
+        session.setAttribute("user", user);
+        return "redirect:/login";
     }
 
     //login

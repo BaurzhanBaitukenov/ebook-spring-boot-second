@@ -28,8 +28,8 @@
                 </div>
                 <div th:each="club :${clubs}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-3">
-                        <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}" alt="..." /></br>
-                        <a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a></br>
+                        <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}"/></br>
+                        <a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name</a></br>
                         <p class="lead mb-0" th:text="${club.author}"></p>
                     </div>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}" th:text="View">View</a>

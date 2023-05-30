@@ -1,10 +1,7 @@
 package com.example.springbootebooksecond.controller;
 
-import com.example.springbootebooksecond.dto.RegistrationDto;
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,18 +26,14 @@ public class UserController {
         return "users/users-list";
     }
 
-//    @GetMapping("/profile")
-//    public String getFakeProfile() {
-//        return "users/user-fake-profile";
-//    }
-//
-//
-//    // get profile page by id
-//    @GetMapping("/profile/{id}")
-//    public String getProfilePage(@PathVariable("id") long id, Model model) {
-//        RegistrationDto user = userService.findById(id);
-//        model.addAttribute("user", user);
-//        return "users/user-profile";
-//    }
+
+    // user page detail
+    @GetMapping("/profile/{username}")
+    public String getProfilePage(@PathVariable("username") String username, Model model) {
+        UserEntity user = userService.findByEmail(username);
+        model.addAttribute("user", user);
+        return "users/user-profile";
+    }
+
 
 }

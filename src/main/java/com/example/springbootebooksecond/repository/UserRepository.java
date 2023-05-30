@@ -1,5 +1,6 @@
 package com.example.springbootebooksecond.repository;
 
+import com.example.springbootebooksecond.dto.RegistrationDto;
 import com.example.springbootebooksecond.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
