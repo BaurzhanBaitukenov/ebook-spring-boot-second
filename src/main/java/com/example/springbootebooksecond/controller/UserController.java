@@ -29,13 +29,18 @@ public class UserController {
         return "users/users-list";
     }
 
-
-    // get profile page by id
-    @GetMapping("/profile/{id}")
-    public String getProfilePage(@PathVariable("id") long id, Model model) {
-        RegistrationDto user = userService.findById(id);
-        model.addAttribute("user", user);
-        return "users/user-profile";
-    }
+//    @GetMapping("/profile")
+//    public String getFakeProfile() {
+//        return "users/user-fake-profile";
+//    }
+//
+//
+//    // get profile page by id
+//    @GetMapping("/profile/{id}")
+//    public String getProfilePage(@PathVariable("id") long id, Model model) {
+//        RegistrationDto user = userService.findById(id);
+//        model.addAttribute("user", user);
+//        return "users/user-profile";
+//    }
 
 }

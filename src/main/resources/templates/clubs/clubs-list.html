@@ -1,6 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://thymeleaf.org"
+
       layout:decorate="~{layout}">
 <head>
     <title>Club List</title>
@@ -31,7 +33,7 @@
                         <p class="lead mb-0" th:text="${club.author}"></p>
                     </div>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}" th:text="View">View</a>
-                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
                 </div>
             </div>
         </div>

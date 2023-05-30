@@ -1,12 +1,14 @@
 package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.dto.ClubDto;
+import com.example.springbootebooksecond.dto.RegistrationDto;
 import com.example.springbootebooksecond.models.Club;
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.ClubService;
 import com.example.springbootebooksecond.service.UserService;
 import jakarta.validation.Valid;
-import org.apache.catalina.security.SecurityUtil;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,9 +21,11 @@ import java.util.List;
 public class ClubController {
 
     private final ClubService clubService;
+    private final UserService userService;
 
-    public ClubController(ClubService clubService) {
+    public ClubController(ClubService clubService, UserService userService) {
         this.clubService = clubService;
+        this.userService = userService;
     }
 
     @GetMapping

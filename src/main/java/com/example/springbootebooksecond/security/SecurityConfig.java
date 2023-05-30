@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .permitAll()
                 .requestMatchers("/clubs/new").hasAnyAuthority("ADMIN")
                 .requestMatchers("/clubs/{id}/edit").hasAnyAuthority("ADMIN")
-                .requestMatchers("/clubs/{id}").permitAll()
+                .requestMatchers("/clubs/{id}").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/users/**").hasAuthority("ADMIN")
                 .and()
                 .formLogin(form -> form
