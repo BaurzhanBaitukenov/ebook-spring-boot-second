@@ -30,8 +30,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/clubs/**","/profile/**","/login/**","/clubs", "/register/**", "/css/**", "/js/**")
-                .permitAll()
+                .requestMatchers("/", "/{email}/book","/profile/**","/login/**","/clubs", "/register/**", "/css/**", "/js/**").permitAll()
                 .requestMatchers("/clubs/new").hasAnyAuthority("ADMIN")
                 .requestMatchers("/clubs/{id}/edit").hasAnyAuthority("ADMIN")
                 .requestMatchers("/clubs/{id}").hasAnyAuthority("USER", "ADMIN")

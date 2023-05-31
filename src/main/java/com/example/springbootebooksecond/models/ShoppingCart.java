@@ -16,7 +16,7 @@ import java.util.List;
 public class ShoppingCart {
     @Id
     private Long id;
-    private Long userId;
+    private String userEmail;
     @OneToMany(mappedBy = "shoppingCartId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookToShoppingCart> bookToShoppingCarts;
 }

@@ -7,5 +7,6 @@ import com.example.springbootebooksecond.models.ShoppingCart;
 import java.util.List;
 
 public interface CartService {
-    List<BookToShoppingCart> getBooksByUserId(long id);
+    List<BookToShoppingCart> getCart(String username);
+    void addToCart(String username, Long bookId, int amount);
 }

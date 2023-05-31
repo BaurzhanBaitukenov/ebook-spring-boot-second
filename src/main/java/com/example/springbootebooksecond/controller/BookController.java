@@ -98,15 +98,4 @@ public class BookController {
         return "clubs/clubs-list";
     }
 
-    //saved books by user
-    @GetMapping("/{id}/book")
-    public String getCartPage(@PathVariable("id") long userId, Model model) {
-        List<BookToShoppingCart> shoppingCart = cartService.getBooksByUserId(userId);
-        List<Book> books = shoppingCart.stream()
-                .map(BookToShoppingCart::getBook)
-                .collect(Collectors.toList());
-        model.addAttribute("books", books);
-        return "clubs/shopping-cart"; // Assuming you have a "shopping-cart.html" template
-    }
-
 }

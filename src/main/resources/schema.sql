@@ -63,13 +63,22 @@ CREATE TABLE IF NOT EXISTS public.books
 
 
 
+-- CREATE TABLE IF NOT EXISTS public.shopping_cart
+-- (
+--     id BIGSERIAL NOT NULL,
+--     user_id BIGINT NOT NULL,
+--     CONSTRAINT shopping_cart_pk PRIMARY KEY (id),
+--     CONSTRAINT shopping_cart_users_fk FOREIGN KEY (user_id)
+--     REFERENCES public.users (id) MATCH SIMPLE
+--     );
+
 CREATE TABLE IF NOT EXISTS public.shopping_cart
 (
     id BIGSERIAL NOT NULL,
-    user_id BIGINT NOT NULL,
+    user_email varchar(255) NOT NULL,
     CONSTRAINT shopping_cart_pk PRIMARY KEY (id),
-    CONSTRAINT shopping_cart_users_fk FOREIGN KEY (user_id)
-    REFERENCES public.users (id) MATCH SIMPLE
+    CONSTRAINT shopping_cart_users_fk FOREIGN KEY (user_email)
+    REFERENCES public.users (email) MATCH SIMPLE
     );
 
 

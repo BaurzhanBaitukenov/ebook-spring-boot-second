@@ -23,6 +23,7 @@
                         <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search books" aria-label="Search">
                     </form>
                 </div>
+<!--                <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{'/' + ${#authentication.principal.username} + '/book'}">Add to Cart</a>-->
                 <div th:each="club :${clubs}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-3">
                         <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}"/></br>
@@ -31,7 +32,7 @@
                     </div>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}" th:text="View">View</a>
                     <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
-                    <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{/clubs/cart}">Add to Cart</a>
+                    <a class="btn btn-primary" th:href="@{'/' + ${#authentication.principal.username} + '/book'}" th:text="View">View</a>
                 </div>
             </div>
         </div>
