@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="small text-muted" th:text="${club.createdOn}"></div>
                             <h2 class="card-title">About this running club</h2>
-                            <a sec:authorize="hasAnyAuthority('USER', 'ADMIN')" class="btn btn-primary" th:href="@{/clubs/buy}">Buy</a>
+                            <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{/clubs/cart}">Add to Cart</a>
                             <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
                         </div>
                     </div>

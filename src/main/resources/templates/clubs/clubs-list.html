@@ -13,9 +13,6 @@
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
         <div class="container px-5 my-5">
-            <div th:if="${param.success}" class="alert alert-success">
-                Your are registered successfully!
-            </div>
             <div class="text-center mb-5">
                 <h1 class="fw-bolder">Ebook</h1>
                 <p class="lead fw-normal text-muted mb-0">Find any books</p>
@@ -23,7 +20,7 @@
             <div class="row gx-5">
                 <div>
                     <form th:action="@{/clubs/search}" class="form-inline my-2 my-lg-0 mb-3">
-                        <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search clubs" aria-label="Search">
+                        <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search books" aria-label="Search">
                     </form>
                 </div>
                 <div th:each="club :${clubs}" class="col-lg-6 mb-2">
@@ -33,7 +30,8 @@
                         <p class="lead mb-0" th:text="${club.author}"></p>
                     </div>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}" th:text="View">View</a>
-                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
+                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
+                    <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{/clubs/cart}">Add to Cart</a>
                 </div>
             </div>
         </div>

@@ -2,7 +2,10 @@ package com.example.springbootebooksecond.service.impl;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
+import com.example.springbootebooksecond.models.ShoppingCart;
+import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.repository.BookRepository;
+import com.example.springbootebooksecond.repository.UserRepository;
 import com.example.springbootebooksecond.service.BookService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,9 +17,11 @@ import java.util.stream.Collectors;
 public class BookImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final UserRepository userRepository;
 
-    public BookImpl(BookRepository bookRepository) {
+    public BookImpl(BookRepository bookRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -52,6 +57,12 @@ public class BookImpl implements BookService {
     public List<BookDto> searchBooks(String query) {
         List<Book> clubs = bookRepository.searchBooks(query);
         return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ShoppingCart getCart(long userId) {
+//        UserEntity user =
+        return null;
     }
 
     private Book mapToClub(BookDto clubDto) {

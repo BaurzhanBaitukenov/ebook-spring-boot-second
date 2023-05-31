@@ -2,15 +2,22 @@ package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
+import com.example.springbootebooksecond.models.BookToShoppingCart;
+import com.example.springbootebooksecond.models.ShoppingCart;
+import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.BookService;
+import com.example.springbootebooksecond.service.CartService;
 import com.example.springbootebooksecond.service.UserService;
+import com.example.springbootebooksecond.service.impl.CartImpl;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/clubs")
@@ -18,10 +25,12 @@ public class BookController {
 
     private final BookService bookService;
     private final UserService userService;
+    private final CartService cartService;
 
-    public BookController(BookService bookService, UserService userService) {
+    public BookController(BookService bookService, UserService userService, CartService cartService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.cartService = cartService;
     }
 
     @GetMapping
@@ -88,4 +97,16 @@ public class BookController {
         model.addAttribute("clubs", clubs);
         return "clubs/clubs-list";
     }
+
+    //saved books by user
+    @GetMapping("/{id}/book")
+    public String getCartPage(@PathVariable("id") long userId, Model model) {
+        List<BookToShoppingCart> shoppingCart = cartService.getBooksByUserId(userId);
+        List<Book> books = shoppingCart.stream()
+                .map(BookToShoppingCart::getBook)
+                .collect(Collectors.toList());
+        model.addAttribute("books", books);
+        return "clubs/shopping-cart"; // Assuming you have a "shopping-cart.html" template
+    }
+
 }

@@ -42,6 +42,9 @@
                 <div th:if="${param.fail}" class="alert alert-danger">
                     Username or email already exists</div>
                 <div class="login-form">
+                    <div th:if="${param.success}" class="alert alert-success">
+                        Your are registered successfully!
+                    </div>
                     <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
                         <div class="form-group">
                             <label>Username</label>

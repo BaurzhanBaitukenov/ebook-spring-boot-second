@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://thymeleaf.org"
+
+      layout:decorate="~{layout}">
+<head>
+    <title>Club List</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+                <div th:each="book :${books}" class="col-lg-6 mb-2">
+                    <div class="position-relative mb-3">
+                        <img class="img-fluid rounded-3 mb-3" th:src="${book.photoUrl}"/></br>
+                        <a th:text="${book.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name</a></br>
+                        <p class="lead mb-0" th:text="${book.author}"></p>
+                    </div>
+<!--                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}" th:text="View">View</a>-->
+<!--                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>-->
+<!--                    <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{/clubs/cart}">Add to Cart</a>-->
+                </div>
+    </section>
+
+
+</main>
+</body>
+</html>
