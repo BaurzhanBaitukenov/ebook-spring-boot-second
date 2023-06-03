@@ -1,5 +1,6 @@
 package com.example.springbootebooksecond.security;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,13 +13,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfig {
 
     private final CustomUserDetailService userDetailService;
 
-    public SecurityConfig(CustomUserDetailService userDetailService) {
-        this.userDetailService = userDetailService;
-    }
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -30,10 +29,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/{email}/book","/profile/**","/login/**","/clubs", "/register/**", "/css/**", "/js/**").permitAll()
+                .requestMatchers("/","/login/**","/clubs", "/register/**", "/css/**", "/js/**").permitAll()
                 .requestMatchers("/clubs/new").hasAnyAuthority("ADMIN")
                 .requestMatchers("/clubs/{id}/edit").hasAnyAuthority("ADMIN")
                 .requestMatchers("/clubs/{id}").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/book/{email}").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/profile/**").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/users/**").hasAuthority("ADMIN")
                 .and()
                 .formLogin(form -> form

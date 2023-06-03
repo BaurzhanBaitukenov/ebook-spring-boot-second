@@ -10,6 +10,7 @@
 
     <!-- Page Content-->
     <section layout:fragment="body">
+        <a class="btn btn-primary" th:href="@{/}">Go Back</a>
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
@@ -28,9 +29,6 @@
                         <a href="#!"><img class="card-img-top" th:src="${club.photoUrl}" alt="..." /></a>
                         <div class="card-body">
                             <div class="small text-muted" th:text="${club.createdOn}"></div>
-                            <h2 class="card-title">About this running club</h2>
-                            <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{/clubs/cart}">Add to Cart</a>
-                            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
                         </div>
                     </div>
                     <!-- Nested row for non-featured blog posts-->
@@ -62,6 +60,18 @@
                             <span th:text="${club.updatedOn}"></span>
                         </div>
                     </div>
+                    <div class="card mb-4">
+                        <div class="card-header">Price</div>
+                        <div class="card-body">
+                            <span th:text="${club.price + ' KZT'}"></span>
+                        </div>
+                    </div>
+                    <form method="post" th:action="@{/book/cart}">
+                        <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
+                        <input type="hidden" name="bookId" th:value="${club.id}" />
+                        <button class="btn btn-primary" type="submit">Add to Cart</button>
+                    </form>
+                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
                 </div>
             </div>
         </div>

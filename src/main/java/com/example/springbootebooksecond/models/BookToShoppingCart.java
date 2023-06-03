@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BookToShoppingCart {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long shoppingCartId;
     @ManyToOne

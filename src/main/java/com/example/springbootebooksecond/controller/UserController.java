@@ -5,6 +5,7 @@ import com.example.springbootebooksecond.models.BookToShoppingCart;
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.CartService;
 import com.example.springbootebooksecond.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +17,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final CartService cartService;
 
-    public UserController(UserService userService, CartService cartService) {
-        this.userService = userService;
-        this.cartService = cartService;
-    }
 
     //list of all users
     @GetMapping("/users")
@@ -45,23 +43,31 @@ public class UserController {
 
 
     // user saved books
-    @GetMapping("/{email}/book")
+    @GetMapping("/book/{email}")
     public String getCartPage(@PathVariable("email") String email, Model model) {
         List<BookToShoppingCart> shoppingCart = cartService.getCart(email);
         List<Book> books = shoppingCart.stream()
                 .map(BookToShoppingCart::getBook)
                 .collect(Collectors.toList());
+
+        int totalPrice = books.stream()
+                .mapToInt(Book::getPrice)
+                .sum();
+
+
         model.addAttribute("books", books);
-        return "clubs/shopping-cart"; // Assuming you have a "shopping-cart.html" template
+        model.addAttribute("totalPrice", totalPrice);
+        return "clubs/shopping-cart";
     }
 
-//    @PostMapping("/book/{username}")
-//    public String addToCart(@PathVariable("username") String username,
-//                            @RequestParam("bookId") Long bookId,
-//                            @RequestParam("amount") int amount) {
-//        cartService.addToCart(username, bookId, amount);
-//        return "redirect:/" + username + "/book";
-//    }
+
+    @PostMapping("/book/cart")
+    public String addToCart(@RequestParam("shoppingCartId") long shoppingCartId,
+                            @RequestParam("bookId") long bookId) {
+
+        cartService.addItemToCart(shoppingCartId, bookId);
+        return "redirect:/clubs";
+    }
 
 
 }

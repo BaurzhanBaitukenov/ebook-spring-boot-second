@@ -2,40 +2,37 @@ package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
-import com.example.springbootebooksecond.models.BookToShoppingCart;
 import com.example.springbootebooksecond.models.ShoppingCart;
-import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.BookService;
 import com.example.springbootebooksecond.service.CartService;
-import com.example.springbootebooksecond.service.UserService;
-import com.example.springbootebooksecond.service.impl.CartImpl;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/clubs")
+@AllArgsConstructor
 public class BookController {
 
     private final BookService bookService;
-    private final UserService userService;
     private final CartService cartService;
-
-    public BookController(BookService bookService, UserService userService, CartService cartService) {
-        this.bookService = bookService;
-        this.userService = userService;
-        this.cartService = cartService;
-    }
 
     @GetMapping
     private String listBooks(Model model) {
         List<BookDto> clubs = bookService.findAllBooks();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        ShoppingCart cart = cartService.findShoppingCartByUserName(username);
+
+        model.addAttribute("carts", cart);
         model.addAttribute("clubs", clubs);
         return "clubs/clubs-list";
     }
@@ -78,6 +75,12 @@ public class BookController {
     //Detail Page
     @GetMapping("/{clubId}")
     public String bookDetail(@PathVariable("clubId") long clubId, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        ShoppingCart cart = cartService.findShoppingCartByUserName(username);
+
+        model.addAttribute("carts", cart);
+
         BookDto clubDto = bookService.findBookById(clubId);
         model.addAttribute("club", clubDto);
         return "clubs/clubs-detail";

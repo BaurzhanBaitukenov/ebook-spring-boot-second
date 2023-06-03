@@ -27,31 +27,12 @@
                             <strong>Username:</strong> <span th:text="${user.username}">exampleEmail</span><br>
                             <strong>Email:</strong> <span th:text="${user.email}">exampleEmail</span><br>
                             <strong>Role:</strong> <span th:each="role : ${user.roles}" th:text="${role.name}"></span><br><br>
+                            <li sec:authorize="isAuthenticated()" class="nav-item"><a class="btn btn-primary" th:href="@{'/book/' + ${#authentication.principal.username}}">Cart</a></li>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-<!--            <div class="row">-->
-<!--                <div class="col-md-4">-->
-<!--                    &lt;!&ndash; Profile Card &ndash;&gt;-->
-<!--                    <div class="card">-->
-<!--                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx9tjaExsY-srL4VsHNE_OKGVCJ-eIFNBktw&usqp=CAU" class="card-img-top" alt="Profile Image">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-md-8">-->
-<!--                    &lt;!&ndash; Profile Details &ndash;&gt;-->
-<!--                    <div class="card" style="display: inline;">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Profile Details</h5>-->
-<!--                            <p class="card-text">-->
-<!--                                <strong>Email:</strong><h5 class="card-title" sec:authentication="principal.username">exampleName</h5>-->
-<!--                                <strong>Privilege:</strong><h5 class="card-title" sec:authentication="principal.authorities">exampleName</h5>-->
-<!--                            </p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
     </section>
 
 

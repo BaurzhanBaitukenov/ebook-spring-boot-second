@@ -2,11 +2,9 @@ package com.example.springbootebooksecond.service.impl;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
-import com.example.springbootebooksecond.models.ShoppingCart;
-import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.repository.BookRepository;
-import com.example.springbootebooksecond.repository.UserRepository;
 import com.example.springbootebooksecond.service.BookService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class BookImpl implements BookService {
 
     private final BookRepository bookRepository;
-    private final UserRepository userRepository;
-
-    public BookImpl(BookRepository bookRepository, UserRepository userRepository) {
-        this.bookRepository = bookRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<BookDto> findAllBooks() {
@@ -59,12 +52,6 @@ public class BookImpl implements BookService {
         return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
     }
 
-    @Override
-    public ShoppingCart getCart(long userId) {
-//        UserEntity user =
-        return null;
-    }
-
     private Book mapToClub(BookDto clubDto) {
         if(clubDto == null) {
             return null;
@@ -76,6 +63,7 @@ public class BookImpl implements BookService {
                 .title(clubDto.getTitle())
                 .photoUrl(clubDto.getPhotoUrl())
                 .content(clubDto.getContent())
+                .price(clubDto.getPrice())
                 .createdOn(clubDto.getCreatedOn())
                 .updatedOn(clubDto.getUpdatedOn())
                 .build();
@@ -94,6 +82,7 @@ public class BookImpl implements BookService {
                 .title(club.getTitle())
                 .photoUrl(club.getPhotoUrl())
                 .content(club.getContent())
+                .price(club.getPrice())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
                 .build();

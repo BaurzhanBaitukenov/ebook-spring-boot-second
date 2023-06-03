@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ShoppingCart {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userEmail;
     @OneToMany(mappedBy = "shoppingCartId", cascade = CascadeType.ALL, orphanRemoval = true)

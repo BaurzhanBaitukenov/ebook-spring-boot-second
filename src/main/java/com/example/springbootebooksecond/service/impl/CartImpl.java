@@ -28,19 +28,27 @@ public class CartImpl implements CartService {
     }
 
     @Override
-    public void addToCart(String username, Long bookId, int amount) {
-        ShoppingCart shoppingCart = cartRepository.findByUserEmail(username);
-        Book book = bookRepository.findById(bookId).orElse(null);
+    public ShoppingCart addItemToCart(long shoppingCartId, long bookId) {
+        ShoppingCart shoppingCart = cartRepository.findById(shoppingCartId).orElseThrow(() -> new RuntimeException("Shopping cart not found"));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
 
-        if (shoppingCart != null && book != null) {
-            BookToShoppingCart bookToShoppingCart = new BookToShoppingCart();
-            bookToShoppingCart.setShoppingCartId(shoppingCart.getId());
-            bookToShoppingCart.setBook(book);
-            bookToShoppingCart.setAmount(amount);
+        BookToShoppingCart bookToShoppingCart = new BookToShoppingCart();
+        bookToShoppingCart.setShoppingCartId(shoppingCartId);
+        bookToShoppingCart.setBook(book);
 
-            shoppingCart.getBookToShoppingCarts().add(bookToShoppingCart);
-            cartRepository.save(shoppingCart);
-        }
+        shoppingCart.getBookToShoppingCarts().add(bookToShoppingCart);
+
+        return cartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public ShoppingCart findShoppingCartByUserName(String username) {
+        return cartRepository.findByUserEmail(username);
+    }
+
+    @Override
+    public ShoppingCart findShoppingCartById(long id) {
+        return cartRepository.findById(id).get();
     }
 
 

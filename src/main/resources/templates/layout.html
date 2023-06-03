@@ -21,17 +21,13 @@
                 <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
                 <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/register}">Register</a></li>
                 <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{'/profile/' + ${#authentication.principal.username}}" th:text="${#authentication.principal.username}">Email</a></li>
-<!--                <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/profile}" th:text="${#authentication.principal.username}">Email</a></li>-->
-<!--                sec:authorize="isAuthenticated()"-->
                 <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Welcome</a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                         <li sec:authorize="hasAuthority('ADMIN')" ><a class="dropdown-item" th:href="@{/clubs/new}">Create Book</a></li>
                         <li sec:authorize="hasAuthority('ADMIN')"><a class="dropdown-item" th:href="@{/users}">List of Users</a></li>
-<!--                        <span th:text="${#authentication.getPrincipal().authorities}"></span>-->
                         <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
                     </ul>
-<!--                    sec:authorize="hasAuthority('ADMIN')"-->
                 </li>
             </ul>
         </div>

@@ -29,5 +29,4 @@ public class UserEntity {
     )
     private List<Role> roles = new ArrayList<>();
 
-
 }

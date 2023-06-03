@@ -21,6 +21,8 @@ public class BookDto {
     private String photoUrl;
     @NotEmpty(message = "Book content should not be empty!")
     private String content;
+    @NotEmpty(message = "Book price should not be empty!")
+    private int price;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 }

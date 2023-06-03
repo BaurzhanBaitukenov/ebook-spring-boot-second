@@ -2,6 +2,7 @@ package com.example.springbootebooksecond.security;
 
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,13 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public CustomUserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
