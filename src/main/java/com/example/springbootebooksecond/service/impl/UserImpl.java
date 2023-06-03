@@ -6,6 +6,7 @@ import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.repository.BookRepository;
 import com.example.springbootebooksecond.repository.RoleRepository;
 import com.example.springbootebooksecond.repository.UserRepository;
+import com.example.springbootebooksecond.service.ShoppingCartService;
 import com.example.springbootebooksecond.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

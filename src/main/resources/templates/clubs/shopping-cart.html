@@ -35,6 +35,11 @@
                         <div class="card-body">
                             <span th:text="${book.price + ' KZT'}"></span>
                         </div>
+                        <form method="post" th:action="@{/book/cart/delete}">
+                            <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
+                            <input type="hidden" name="bookId" th:value="${book.id}" />
+                            <button class="btn btn-primary" type="submit">Delete from Cart</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -9,5 +9,6 @@ public interface CartService {
     List<BookToShoppingCart> getCart(String username);
     ShoppingCart addItemToCart(long shoppingCartId, long bookId);
     ShoppingCart findShoppingCartByUserName(String username);
+    void deleteItemFromCart(long shoppingCartId, long bookId);
     ShoppingCart findShoppingCartById(long id);
 }

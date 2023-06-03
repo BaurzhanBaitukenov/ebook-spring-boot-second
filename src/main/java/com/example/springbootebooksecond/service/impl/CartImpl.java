@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -29,8 +31,18 @@ public class CartImpl implements CartService {
 
     @Override
     public ShoppingCart addItemToCart(long shoppingCartId, long bookId) {
-        ShoppingCart shoppingCart = cartRepository.findById(shoppingCartId).orElseThrow(() -> new RuntimeException("Shopping cart not found"));
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        ShoppingCart shoppingCart = cartRepository.findById(shoppingCartId)
+                .orElseThrow(() -> new RuntimeException("Shopping cart not found"));
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
+
+        // Check if the book is already present in the shopping cart
+        boolean isBookAlreadyInCart = shoppingCart.getBookToShoppingCarts().stream()
+                .anyMatch(item -> item.getBook().getId() == bookId);
+
+        if (isBookAlreadyInCart) {
+            throw new IllegalArgumentException("Book already exists in the shopping cart");
+        }
 
         BookToShoppingCart bookToShoppingCart = new BookToShoppingCart();
         bookToShoppingCart.setShoppingCartId(shoppingCartId);
@@ -44,6 +56,15 @@ public class CartImpl implements CartService {
     @Override
     public ShoppingCart findShoppingCartByUserName(String username) {
         return cartRepository.findByUserEmail(username);
+    }
+
+    @Override
+    public void deleteItemFromCart(long shoppingCartId, long bookId) {
+        ShoppingCart cart = cartRepository.findById(shoppingCartId).get();
+
+        List<BookToShoppingCart> cartItems = cart.getBookToShoppingCarts();
+        cartItems.removeIf(item -> item.getBook().getId() == bookId);
+        cartRepository.save(cart);
     }
 
     @Override

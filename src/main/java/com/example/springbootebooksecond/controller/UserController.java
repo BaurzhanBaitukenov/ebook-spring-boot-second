@@ -2,16 +2,20 @@ package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.models.Book;
 import com.example.springbootebooksecond.models.BookToShoppingCart;
+import com.example.springbootebooksecond.models.ShoppingCart;
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.service.CartService;
 import com.example.springbootebooksecond.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,15 +61,37 @@ public class UserController {
 
         model.addAttribute("books", books);
         model.addAttribute("totalPrice", totalPrice);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        ShoppingCart cart = cartService.findShoppingCartByUserName(username);
+
+        model.addAttribute("carts", cart);
         return "clubs/shopping-cart";
     }
 
 
+    //add book to cart
     @PostMapping("/book/cart")
     public String addToCart(@RequestParam("shoppingCartId") long shoppingCartId,
-                            @RequestParam("bookId") long bookId) {
+                            @RequestParam("bookId") long bookId,
+                            RedirectAttributes redirectAttributes) {
 
-        cartService.addItemToCart(shoppingCartId, bookId);
+        try {
+            cartService.addItemToCart(shoppingCartId, bookId);
+            return "redirect:/clubs";
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addAttribute("error", "true");
+            return "redirect:/clubs";
+        }
+    }
+
+
+    //remove book from cart
+    @PostMapping("/book/cart/delete")
+    public String deleteFromCart(@RequestParam("shoppingCartId") long shoppingCartId,
+                                 @RequestParam("bookId") long bookId) {
+        cartService.deleteItemFromCart(shoppingCartId, bookId);
         return "redirect:/clubs";
     }
 

@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .requestMatchers("/clubs/{id}/edit").hasAnyAuthority("ADMIN")
                 .requestMatchers("/clubs/{id}").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/book/{email}").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/book/cart/delete").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/profile/**").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/users/**").hasAuthority("ADMIN")
                 .and()
