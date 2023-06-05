@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS public.comments
 (
     id BIGSERIAL NOT NULL,
     book_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
+    user_email varchar(255) NOT NULL,
     content varchar(500) NOT NULL,
     created_at timestamp(6) without time zone,
 
@@ -111,7 +111,13 @@ CREATE TABLE IF NOT EXISTS public.comments
     CONSTRAINT books_comments_fk FOREIGN KEY (book_id)
     REFERENCES public.books (id) MATCH SIMPLE,
 
-    CONSTRAINT users_comments_fk FOREIGN KEY (user_id)
-    REFERENCES public.users (id) MATCH SIMPLE
+    CONSTRAINT users_comments_fk FOREIGN KEY (user_email)
+    REFERENCES public.users (email) MATCH SIMPLE
     );
+
+ALTER TABLE public.comments
+    ADD COLUMN book_id BIGINT,
+ADD CONSTRAINT fk_comments_book
+FOREIGN KEY (book_id) REFERENCES public.books (id)
+ON DELETE CASCADE;
 

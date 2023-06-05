@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://thymeleaf.org"
+
+      layout:decorate="~{layout}">
+<head>
+    <title>Club List</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+        <h1>Leave a review of the book</h1>
+        <form th:action="@{/clubs/{bookId}/comments/new(bookId=${bookId})}" method="post">
+            <input type="hidden" name="id" th:value="${comment.id}" />
+<!--            <p>Book: <input type="text" th:field="${book.title}" /></p>-->
+<!--            <p>User: <input type="text" th:field="*{user.username}" /></p>-->
+            <p>Comment: <input type="text" th:field="${comment.content}" /></p>
+
+            <button class="btn btn-primary" type="submit">Save</button><br>
+        </form>
+        <a class="btn btn-primary" href="/">Go Back</a>
+    </section>
+
+
+</main>
+</body>
+</html>

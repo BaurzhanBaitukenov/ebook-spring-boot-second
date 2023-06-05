@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .requestMatchers("/clubs/{id}").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/book/{email}").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/book/cart/delete").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/clubs/{bookId}/comments").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/clubs/{bookId}/comments/new").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/profile/**").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/users/**").hasAuthority("ADMIN")
                 .and()

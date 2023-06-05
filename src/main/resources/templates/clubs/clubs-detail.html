@@ -66,12 +66,44 @@
                             <span th:text="${club.price + ' KZT'}"></span>
                         </div>
                     </div>
-                    <form method="post" th:action="@{/book/cart}">
-                        <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
-                        <input type="hidden" name="bookId" th:value="${club.id}" />
-                        <button class="btn btn-primary" type="submit">Add to Cart</button>
-                    </form>
-                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
+
+<!--                    Comment section-->
+                    <div class="card mb-4">
+                        <div class="card-header">Leave a Comment About Book</div>
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Book</th>
+                                    <th>User</th>
+                                    <th>Content</th>
+                                    <th>Created At</th>
+                                </tr>
+                                <tr th:each="comment : ${comments}">
+                                    <td th:text="${comment.id}"></td>
+                                    <td th:text="${comment.book.title}"></td>
+                                    <td th:text="${comment.userEmail}"></td>
+                                        <td th:text="${comment.content}"></td>
+                                    <td th:text="${comment.createdAt}"></td>
+                                </tr>
+                            </table>
+                            <a class="btn btn-primary" th:href="@{/clubs/{clubId}/comments/new(clubId=${club.id})}">Write a Comment</a>
+                        </div>
+                    </div>
+
+
+                    <div class="card mb-4">
+                        <div class="card-header">Add to Cart</div>
+                        <div class="card-body">
+                            <form method="post" th:action="@{/book/cart}">
+                                <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
+                                <input type="hidden" name="bookId" th:value="${club.id}" />
+                                <button class="btn btn-primary" type="submit">Add to Cart</button>
+                            </form><br>
+                            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

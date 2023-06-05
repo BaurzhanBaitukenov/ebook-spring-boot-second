@@ -2,6 +2,7 @@ package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
+import com.example.springbootebooksecond.models.Comment;
 import com.example.springbootebooksecond.models.ShoppingCart;
 import com.example.springbootebooksecond.service.BookService;
 import com.example.springbootebooksecond.service.CartService;
@@ -84,6 +85,10 @@ public class BookController {
 
         BookDto clubDto = bookService.findBookById(clubId);
         model.addAttribute("club", clubDto);
+
+
+        List<Comment> comments = bookService.getCommentsByBookId(clubId);
+        model.addAttribute("comments", comments);
         return "clubs/clubs-detail";
     }
 

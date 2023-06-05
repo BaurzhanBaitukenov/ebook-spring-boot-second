@@ -23,9 +23,7 @@ public class Comment {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private String userEmail;
 
     @Column(columnDefinition = "TEXT")
     private String content;

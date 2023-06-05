@@ -2,12 +2,15 @@ package com.example.springbootebooksecond.service.impl;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
+import com.example.springbootebooksecond.models.Comment;
 import com.example.springbootebooksecond.repository.BookRepository;
+import com.example.springbootebooksecond.repository.CommentRepository;
 import com.example.springbootebooksecond.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +38,12 @@ public class BookImpl implements BookService {
         return mapToClubDto(club);
     }
 
+    @Override
+    public Book findBookModelById(long clubId) {
+        Book book = bookRepository.findById(clubId).get();
+        return book;
+    }
+
 
     @Override
     public void updateBook(BookDto clubDto) {
@@ -51,6 +60,28 @@ public class BookImpl implements BookService {
     public List<BookDto> searchBooks(String query) {
         List<Book> clubs = bookRepository.searchBooks(query);
         return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Comment> getCommentsByBookId(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("Book not found"));
+
+        return book.getComments();
+    }
+
+    @Override
+    public Comment addCommentToBook(Long bookId, Comment comment) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("Book not found"));
+
+        comment.setBook(book);
+        comment.setCreatedAt(LocalDateTime.now());
+
+        book.getComments().add(comment);
+        bookRepository.save(book);
+
+        return comment;
     }
 
     private Book mapToClub(BookDto clubDto) {
