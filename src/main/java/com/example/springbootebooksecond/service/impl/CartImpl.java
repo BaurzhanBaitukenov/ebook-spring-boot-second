@@ -10,9 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -36,7 +34,6 @@ public class CartImpl implements CartService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
-        // Check if the book is already present in the shopping cart
         boolean isBookAlreadyInCart = shoppingCart.getBookToShoppingCarts().stream()
                 .anyMatch(item -> item.getBook().getId() == bookId);
 

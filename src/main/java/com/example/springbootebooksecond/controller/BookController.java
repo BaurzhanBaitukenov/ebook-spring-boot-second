@@ -59,6 +59,7 @@ public class BookController {
         return "clubs/clubs-edit";
     }
 
+
     @PostMapping("/{clubId}/edit")
     public String editBook(@PathVariable("clubId") long clubId,
                            @Valid @ModelAttribute("club") BookDto clubDto,

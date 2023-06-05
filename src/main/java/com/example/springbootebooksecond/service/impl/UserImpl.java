@@ -55,19 +55,6 @@ public class UserImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
-    @Override
-    public RegistrationDto findById(long id) {
-        UserEntity user = userRepository.findById(id).get();
-        return mapper(user);
-    }
-
-//    @Override
-//    public void saveBook(UserEntity user, Book book) {
-//        user.getSavedBooks().add(book);
-//        book.getSavedByUsers().add(user);
-//        userRepository.save(user);
-//        bookRepository.save(book);
-//    }
 
 
     public RegistrationDto mapper(UserEntity userEntity) {

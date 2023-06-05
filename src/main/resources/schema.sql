@@ -97,3 +97,21 @@ CREATE TABLE IF NOT EXISTS public.book_to_shopping_cart
     REFERENCES public.books (id) MATCH SIMPLE
     );
 
+
+CREATE TABLE IF NOT EXISTS public.comments
+(
+    id BIGSERIAL NOT NULL,
+    book_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    content varchar(500) NOT NULL,
+    created_at timestamp(6) without time zone,
+
+    CONSTRAINT comments_pk PRIMARY KEY (id),
+
+    CONSTRAINT books_comments_fk FOREIGN KEY (book_id)
+    REFERENCES public.books (id) MATCH SIMPLE,
+
+    CONSTRAINT users_comments_fk FOREIGN KEY (user_id)
+    REFERENCES public.users (id) MATCH SIMPLE
+    );
+
