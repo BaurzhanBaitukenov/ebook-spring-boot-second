@@ -2,8 +2,10 @@ package com.example.springbootebooksecond.service.impl;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
+import com.example.springbootebooksecond.models.BookToShoppingCart;
 import com.example.springbootebooksecond.models.Comment;
 import com.example.springbootebooksecond.repository.BookRepository;
+import com.example.springbootebooksecond.repository.BookToShoppingCartRepository;
 import com.example.springbootebooksecond.repository.CommentRepository;
 import com.example.springbootebooksecond.service.BookService;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class BookImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final BookToShoppingCartRepository bookToShoppingCartRepository;
 
     @Override
     public List<BookDto> findAllBooks() {
@@ -48,6 +51,11 @@ public class BookImpl implements BookService {
     @Override
     public void updateBook(BookDto clubDto) {
         Book club = mapToClub(clubDto);
+        bookRepository.save(club);
+    }
+
+    @Override
+    public void updateBookModel(Book club) {
         bookRepository.save(club);
     }
 
@@ -84,41 +92,46 @@ public class BookImpl implements BookService {
         return comment;
     }
 
-    private Book mapToClub(BookDto clubDto) {
-        if(clubDto == null) {
-            return null;
-        }
+    @Override
+    public Comment deleteCommentToBook(Long bookId, Comment comment) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
-        Book club = Book.builder()
-                .id(clubDto.getId())
+        comment.setBook(book);
+        comment.setCreatedAt(LocalDateTime.now());
+
+        book.getComments().remove(comment);
+        bookRepository.save(book);
+
+        return comment;
+    }
+
+    private Book mapToClub(BookDto clubDto) {
+        return Book.builder()
+                .id(clubDto.getId())  // Set the id from the dto
                 .author(clubDto.getAuthor())
                 .title(clubDto.getTitle())
                 .photoUrl(clubDto.getPhotoUrl())
                 .content(clubDto.getContent())
                 .price(clubDto.getPrice())
+                .demoVersion(clubDto.getDemoVersion())
                 .createdOn(clubDto.getCreatedOn())
                 .updatedOn(clubDto.getUpdatedOn())
                 .build();
-
-        return club;
     }
 
     private BookDto mapToClubDto(Book club) {
-        if(club == null) {
-            return null;
-        }
 
-        BookDto clubDto = BookDto.builder()
+        return BookDto.builder()
                 .id(club.getId())
                 .author(club.getAuthor())
                 .title(club.getTitle())
                 .photoUrl(club.getPhotoUrl())
                 .content(club.getContent())
                 .price(club.getPrice())
+                .demoVersion(club.getDemoVersion())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
                 .build();
-
-        return clubDto;
     }
 }

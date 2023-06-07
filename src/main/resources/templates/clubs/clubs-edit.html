@@ -11,7 +11,7 @@
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
         <div class="container">
-            <form role="form" method="post" th:action="@{/clubs/{clubId}/edit(clubId=${club.id})}" th:object="${club}">
+            <form method="post" role="form" th:action="@{/clubs/{clubId}/edit(clubId=${club.id})}" th:object="${club}">
                 <input type="hidden" th:field="*{id}">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -37,6 +37,17 @@
                         <p th:if="${#fields.hasErrors('author')}" class="text-danger" th:errors="*{author}"></p>
                     </div>
                     <div class="form-group col-md-6">
+                        <label for="photoUrl">Price</label>
+                        <input
+                                type="number"
+                                class="form-control"
+                                id="price"
+                                name="price"
+                                th:field="*{price}"
+                                placeholder="price">
+                        <p th:if="${#fields.hasErrors('price')}" class="text-danger" th:errors="*{price}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
                         <label for="photoUrl">PhotoUrl</label>
                         <input
                                 type="text"
@@ -46,6 +57,17 @@
                                 th:field="*{photoUrl}"
                                 placeholder="Photo Url">
                         <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="photoUrl">Demo Version</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="demoVersion"
+                                name="demoVersion"
+                                th:field="*{demoVersion}"
+                                placeholder="demoVersion Url">
+                        <p th:if="${#fields.hasErrors('demoVersion')}" class="text-danger" th:errors="*{demoVersion}"></p>
                     </div>
                 </div>
                 <div class="form-group mb-3">

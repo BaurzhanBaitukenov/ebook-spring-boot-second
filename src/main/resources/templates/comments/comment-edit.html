@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://thymeleaf.org"
+
+      layout:decorate="~{layout}">
+<head>
+    <title>Club List</title>
+</head>
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+        <form role="form" method="post" th:action="@{/clubs/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}" th:object="${comment}">
+            <input type="hidden" th:field="*{id}">
+            <div class="container">
+                <div class="card my-10">
+                    <div class="card-body">
+                        <h1 class="h3 mb-2">Edit Comment</h1>
+                        <hr>
+                        <div class="form-group mb-3">
+                            <label for="content">Content</label>
+                            <input type="text" class="form-control" id="content" name="content" th:field="*{content}" placeholder="Content">
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+
+</main>
+</body>
+</html>

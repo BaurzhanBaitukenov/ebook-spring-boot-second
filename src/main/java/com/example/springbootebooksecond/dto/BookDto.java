@@ -5,11 +5,15 @@ package com.example.springbootebooksecond.dto;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Getter
+@Setter
 public class BookDto {
 
     private Long id;
@@ -23,6 +27,7 @@ public class BookDto {
     private String content;
     @NotEmpty(message = "Book price should not be empty!")
     private int price;
+    private String demoVersion;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 }

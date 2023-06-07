@@ -24,7 +24,7 @@
                             placeholder="Title">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="title">Author</label>
+                    <label for="author">Author</label>
                     <input
                             type="text"
                             class="form-control"
@@ -63,6 +63,16 @@
                             name="price"
                             th:field="*{price}"
                             placeholder="Price">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="demoVersion">Demo Version</label>
+                    <input
+                            type="text"
+                            class="form-control"
+                            id="demoVersion"
+                            name="demoVersion"
+                            th:field="*{demoVersion}"
+                            placeholder="demoVersion">
                 </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>

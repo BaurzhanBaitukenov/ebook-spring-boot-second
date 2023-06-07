@@ -36,12 +36,14 @@
                         <p class="lead mb-0" th:text="${club.price} + ' KZT'"></p>
                     </div>
                     <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}" th:text="View">View</a>
-                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
-                    <form method="post" th:action="@{/book/cart}">
+
+                    <form method="post" th:action="@{/book/cart}" style="margin-top: 10px;">
                         <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
                         <input type="hidden" name="bookId" th:value="${club.id}" />
                         <button sec:authorize="isAuthenticated()" class="btn btn-primary" type="submit">Add to Cart</button>
                     </form>
+
+                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
                 </div>
             </div>
         </div>

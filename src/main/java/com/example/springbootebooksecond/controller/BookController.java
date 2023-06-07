@@ -2,9 +2,12 @@ package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
+import com.example.springbootebooksecond.models.BookToShoppingCart;
 import com.example.springbootebooksecond.models.Comment;
 import com.example.springbootebooksecond.models.ShoppingCart;
+import com.example.springbootebooksecond.repository.BookToShoppingCartRepository;
 import com.example.springbootebooksecond.service.BookService;
+import com.example.springbootebooksecond.service.BookToShoppingCartService;
 import com.example.springbootebooksecond.service.CartService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,6 +27,7 @@ public class BookController {
 
     private final BookService bookService;
     private final CartService cartService;
+
 
     @GetMapping
     private String listBooks(Model model) {
@@ -55,7 +59,7 @@ public class BookController {
     //update
     @GetMapping("/{clubId}/edit")
     public String editBookForm(@PathVariable("clubId") long clubId, Model model) {
-        BookDto club = bookService.findBookById(clubId);
+        Book club = bookService.findBookModelById(clubId);
         model.addAttribute("club", club);
         return "clubs/clubs-edit";
     }
@@ -63,14 +67,13 @@ public class BookController {
 
     @PostMapping("/{clubId}/edit")
     public String editBook(@PathVariable("clubId") long clubId,
-                           @Valid @ModelAttribute("club") BookDto clubDto,
+                           @Valid @ModelAttribute("club") Book club,
                            BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return "clubs/clubs-edit";
         }
-
-        clubDto.setId(clubId);
-        bookService.updateBook(clubDto);
+        club.setId(clubId);
+        bookService.updateBookModel(club);
         return "redirect:/clubs";
     }
 

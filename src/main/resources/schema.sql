@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS public.books
     id BIGSERIAL NOT NULL,
     author character varying(255) COLLATE pg_catalog."default",
     content character varying(5000) COLLATE pg_catalog."default",
+    price integer,
     created_on timestamp(6) without time zone,
     photo_url character varying(255) COLLATE pg_catalog."default",
     title character varying(255) COLLATE pg_catalog."default",

@@ -31,6 +31,49 @@
                             <div class="small text-muted" th:text="${club.createdOn}"></div>
                         </div>
                     </div>
+
+                    <div class="form-outline mb-4">
+                        <a class="btn btn-outline-secondary" th:href="@{/clubs/{clubId}/comments/new(clubId=${club.id})}">Write a Comment</a><br>
+                    </div>
+                    <div class="row d-flex justify-content-center" th:each="comment : ${comments}">
+                        <div class="col-md-10 col-lg-12">
+                            <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                                <div class="card-body p-4">
+
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU" alt="avatar" width="25"
+                                                         height="25" />
+                                                    <p class="small mb-0 ms-2" th:text="${comment.userEmail}">Martha</p>
+                                                    <p class="small mb-0 ms-2" th:text="${comment.createdAt}">createdAt</p>
+                                                </div>
+                                                <!--                                                like maybe later will be added-->
+                                                <!--                                                <div class="d-flex flex-row align-items-center">-->
+                                                <!--                                                    <p class="small text-muted mb-0">Upvote?</p>-->
+                                                <!--                                                    <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>-->
+                                                <!--                                                    <p class="small text-muted mb-0">3</p>-->
+                                                <!--                                                </div>-->
+                                            </div>
+
+                                            <p th:text="${comment.content}" >Type your note, and hit enter to add it</p>
+                                            <a class="btn btn-outline-secondary"
+                                               th:href="@{/clubs/{bookId}/comments/{commentId}/delete(bookId=${club.id}, commentId=${comment.id})}"
+                                               th:if="${comment.userEmail} == ${#authentication.principal.username}">Delete Comment</a>
+
+                                            <a class="btn btn-outline-secondary"
+                                               th:href="@{/clubs/{bookId}/comments/{commentId}/update(bookId=${club.id}, commentId=${comment.id})}"
+                                               th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <!-- Nested row for non-featured blog posts-->
                 </div>
                 <!-- Side widgets-->
@@ -67,42 +110,48 @@
                         </div>
                     </div>
 
-<!--                    Comment section-->
-                    <div class="card mb-4">
-                        <div class="card-header">Leave a Comment About Book</div>
-                        <div class="card-body">
-                            <table>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Book</th>
-                                    <th>User</th>
-                                    <th>Content</th>
-                                    <th>Created At</th>
-                                </tr>
-                                <tr th:each="comment : ${comments}">
-                                    <td th:text="${comment.id}"></td>
-                                    <td th:text="${comment.book.title}"></td>
-                                    <td th:text="${comment.userEmail}"></td>
-                                        <td th:text="${comment.content}"></td>
-                                    <td th:text="${comment.createdAt}"></td>
-                                </tr>
-                            </table>
-                            <a class="btn btn-primary" th:href="@{/clubs/{clubId}/comments/new(clubId=${club.id})}">Write a Comment</a>
-                        </div>
-                    </div>
-
-
                     <div class="card mb-4">
                         <div class="card-header">Add to Cart</div>
                         <div class="card-body">
                             <form method="post" th:action="@{/book/cart}">
                                 <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
                                 <input type="hidden" name="bookId" th:value="${club.id}" />
-                                <button class="btn btn-primary" type="submit">Add to Cart</button>
+                                <button class="btn btn-outline-secondary" type="submit">Add to Cart</button>
                             </form><br>
-                            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
+                            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-secondary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
                         </div>
                     </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">Demo View</div>
+                        <div class="card-body">
+                            <a th:href="${club.demoVersion}" target="_blank" class="btn btn-primary">Redirect to Demo Version</a>
+
+                        </div>
+                    </div>
+
+<!--                    Comment section-->
+<!--                    <div class="card mb-4">-->
+<!--                        <div class="card-header">Leave a Comment About Book</div>-->
+<!--                        <div class="card-body">-->
+<!--                            <table>-->
+<!--                                <tr>-->
+<!--                                    <th>ID</th>-->
+<!--                                    <th>Book</th>-->
+<!--                                    <th>User</th>-->
+<!--                                    <th>Content</th>-->
+<!--                                    <th>Created At</th>-->
+<!--                                </tr>-->
+<!--                                <tr th:each="comment : ${comments}">-->
+<!--                                    <td th:text="${comment.id}"></td>-->
+<!--                                    <td th:text="${comment.book.title}"></td>-->
+<!--                                    <td th:text="${comment.userEmail}"></td>-->
+<!--                                        <td th:text="${comment.content}"></td>-->
+<!--                                    <td th:text="${comment.createdAt}"></td>-->
+<!--                                </tr>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                 </div>
             </div>

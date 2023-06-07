@@ -62,4 +62,40 @@ public class CommentController {
         redirectAttributes.addFlashAttribute("successMessage", "Comment added successfully");
         return "redirect:/clubs/{bookId}";
     }
+
+
+    @GetMapping("/{commentId}/delete")
+    public String deleteComment(@PathVariable("bookId") Long bookId,
+                                @PathVariable("commentId") Long commentId,
+                                RedirectAttributes redirectAttributes) {
+        commentService.deleteComment(commentId);
+        redirectAttributes.addFlashAttribute("successMessage", "Comment deleted successfully");
+        return "redirect:/clubs/" + bookId;
+    }
+
+
+    @GetMapping("/{commentId}/update")
+    public String updateCommentPage(@PathVariable("bookId") Long bookId,
+                                @PathVariable("commentId") Long commentId,
+                                Model model) {
+        BookDto book = bookService.findBookById(bookId);
+        Comment comment = commentService.findCommentById(commentId);
+
+        model.addAttribute("comment", comment);
+        model.addAttribute("book", book);
+        return "comments/comment-edit";
+    }
+
+    @PostMapping("/{commentId}/update")
+    public String updateComment(@PathVariable("bookId") Long bookId,
+                                @PathVariable("commentId") Long commentId,
+                                @ModelAttribute("comment") Comment comment) {
+        Comment existingComment = commentService.findCommentById(commentId);
+        comment.setBook(existingComment.getBook()); // Set the book from the existing comment
+        comment.setUserEmail(existingComment.getUserEmail());
+        commentService.updateComment(comment);
+        return "redirect:/clubs/" + bookId;
+    }
+
+
 }

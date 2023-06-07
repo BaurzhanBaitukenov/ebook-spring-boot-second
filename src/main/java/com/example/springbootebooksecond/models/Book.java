@@ -1,10 +1,7 @@
 package com.example.springbootebooksecond.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,6 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
+@Getter
+@Setter
 @Table(name = "books")
 public class Book {
     @Id
@@ -26,6 +25,7 @@ public class Book {
     private String photoUrl;
     private String content;
     private int price;
+    private String demoVersion;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

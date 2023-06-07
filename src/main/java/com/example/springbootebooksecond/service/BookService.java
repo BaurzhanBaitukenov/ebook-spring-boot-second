@@ -13,8 +13,11 @@ public interface BookService {
     BookDto findBookById(long clubId);
     Book findBookModelById(long clubId);
     void updateBook(BookDto clubDto);
+    void updateBookModel(Book club);
     void delete(long clubId);
     List<BookDto> searchBooks(String query);
     List<Comment> getCommentsByBookId(Long bookId);
     Comment addCommentToBook(Long bookId, Comment comment);
+    Comment deleteCommentToBook(Long bookId, Comment comment);
+
 }
