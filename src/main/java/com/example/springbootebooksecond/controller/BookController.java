@@ -2,12 +2,9 @@ package com.example.springbootebooksecond.controller;
 
 import com.example.springbootebooksecond.dto.BookDto;
 import com.example.springbootebooksecond.models.Book;
-import com.example.springbootebooksecond.models.BookToShoppingCart;
 import com.example.springbootebooksecond.models.Comment;
 import com.example.springbootebooksecond.models.ShoppingCart;
-import com.example.springbootebooksecond.repository.BookToShoppingCartRepository;
 import com.example.springbootebooksecond.service.BookService;
-import com.example.springbootebooksecond.service.BookToShoppingCartService;
 import com.example.springbootebooksecond.service.CartService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

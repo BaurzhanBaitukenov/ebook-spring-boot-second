@@ -7,4 +7,5 @@ public interface CommentService {
     void deleteComment(Long commentId);
     void updateComment(Comment comment);
     Comment findCommentById(long id);
+    void incrementLikes(Long commentId);
 }

@@ -30,4 +30,6 @@ public class Comment {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    private Integer likes = 0;
 }

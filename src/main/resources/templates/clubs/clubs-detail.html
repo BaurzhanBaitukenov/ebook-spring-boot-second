@@ -44,29 +44,67 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
                                                 <div class="d-flex flex-row align-items-center">
-                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU" alt="avatar" width="25"
-                                                         height="25" />
+                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU" alt="avatar" width="25" height="25" />
                                                     <p class="small mb-0 ms-2" th:text="${comment.userEmail}">Martha</p>
                                                     <p class="small mb-0 ms-2" th:text="${comment.createdAt}">createdAt</p>
                                                 </div>
-                                                <!--                                                like maybe later will be added-->
-                                                <!--                                                <div class="d-flex flex-row align-items-center">-->
-                                                <!--                                                    <p class="small text-muted mb-0">Upvote?</p>-->
-                                                <!--                                                    <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>-->
-                                                <!--                                                    <p class="small text-muted mb-0">3</p>-->
-                                                <!--                                                </div>-->
                                             </div>
 
-                                            <p th:text="${comment.content}" >Type your note, and hit enter to add it</p>
-                                            <a class="btn btn-outline-secondary"
-                                               th:href="@{/clubs/{bookId}/comments/{commentId}/delete(bookId=${club.id}, commentId=${comment.id})}"
+                                            <p th:text="${comment.content}">Type your note, and hit enter to add it</p>
+
+                                            <button class="btn btn-outline-secondary" onclick="incrementLikes(this)" data-comment-id="${comment.id}">
+                                                Like
+                                            </button>
+                                            <span th:text="${comment.likes}">0</span>
+
+                                            <a class="btn btn-outline-secondary" th:href="@{/clubs/{bookId}/comments/{commentId}/delete(bookId=${club.id}, commentId=${comment.id})}"
                                                th:if="${comment.userEmail} == ${#authentication.principal.username}">Delete Comment</a>
 
-                                            <a class="btn btn-outline-secondary"
-                                               th:href="@{/clubs/{bookId}/comments/{commentId}/update(bookId=${club.id}, commentId=${comment.id})}"
+                                            <a class="btn btn-outline-secondary" th:href="@{/clubs/{bookId}/comments/{commentId}/update(bookId=${club.id}, commentId=${comment.id})}"
                                                th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a>
                                         </div>
                                     </div>
+
+<!--                                    <script>-->
+<!--                                        function incrementLikes(button) {-->
+<!--                                            var commentId = button.getAttribute('data-comment-id');-->
+<!--                                            var url = '/comments/' + commentId + '/likes';-->
+
+<!--                                            // Send AJAX request to increment likes-->
+<!--                                            var xhr = new XMLHttpRequest();-->
+<!--                                            xhr.open('POST', url, true);-->
+<!--                                            xhr.send();-->
+
+<!--                                            // Update the like count on the page-->
+<!--                                            var likeCount = button.nextElementSibling;-->
+<!--                                            likeCount.textContent = parseInt(likeCount.textContent) + 1;-->
+
+<!--                                            // Disable the button to prevent multiple likes-->
+<!--                                            button.disabled = true;-->
+<!--                                        }-->
+<!--                                    </script>-->
+
+<!--                                    <div class="card mb-4">-->
+<!--                                        <div class="card-body">-->
+<!--                                            <div class="d-flex justify-content-between">-->
+<!--                                                <div class="d-flex flex-row align-items-center">-->
+<!--                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU" alt="avatar" width="25"-->
+<!--                                                         height="25" />-->
+<!--                                                    <p class="small mb-0 ms-2" th:text="${comment.userEmail}">Martha</p>-->
+<!--                                                    <p class="small mb-0 ms-2" th:text="${comment.createdAt}">createdAt</p>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+
+<!--                                            <p th:text="${comment.content}" >Type your note, and hit enter to add it</p>-->
+<!--                                            <a class="btn btn-outline-secondary"-->
+<!--                                               th:href="@{/clubs/{bookId}/comments/{commentId}/delete(bookId=${club.id}, commentId=${comment.id})}"-->
+<!--                                               th:if="${comment.userEmail} == ${#authentication.principal.username}">Delete Comment</a>-->
+
+<!--                                            <a class="btn btn-outline-secondary"-->
+<!--                                               th:href="@{/clubs/{bookId}/comments/{commentId}/update(bookId=${club.id}, commentId=${comment.id})}"-->
+<!--                                               th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
 
                                 </div>
                             </div>

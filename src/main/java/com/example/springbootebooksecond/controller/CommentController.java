@@ -97,5 +97,10 @@ public class CommentController {
         return "redirect:/clubs/" + bookId;
     }
 
+    @PostMapping("/{commentId}/likes")
+    public void updateComment(@PathVariable("commentId") Long commentId) {
+        commentService.incrementLikes(commentId);
+    }
+
 
 }

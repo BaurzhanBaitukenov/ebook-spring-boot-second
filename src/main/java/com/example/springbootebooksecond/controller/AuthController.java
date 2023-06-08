@@ -20,7 +20,6 @@ public class AuthController {
     private final UserService userService;
 
 
-
     //register
     @GetMapping("/register")
     public String getRegisterForm(Model model) {

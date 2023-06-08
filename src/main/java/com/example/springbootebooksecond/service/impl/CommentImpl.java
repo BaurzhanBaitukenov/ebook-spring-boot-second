@@ -36,5 +36,15 @@ public class CommentImpl implements CommentService {
         return commentRepository.findById(id).get();
     }
 
+    @Override
+    public void incrementLikes(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalArgumentException("Comment not found with ID: " + commentId)
+        );
+
+        comment.setLikes(comment.getLikes() + 1);
+        commentRepository.save(comment);
+    }
+
 
 }
