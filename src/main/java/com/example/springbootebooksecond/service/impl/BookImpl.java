@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,52 +23,52 @@ public class BookImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final BookToShoppingCartRepository bookToShoppingCartRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public List<BookDto> findAllBooks() {
-        List<Book> clubs = bookRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
-        return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
+        List<Book> books = bookRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return books.stream().map(this::mapToBookDto).collect(Collectors.toList());
     }
 
     @Override
-    public Book saveBook(BookDto clubDto) {
-        Book club = mapToClub(clubDto);
-        return bookRepository.save(club);
+    public Book saveBook(BookDto bookDto) {
+        Book book = mapToBook(bookDto);
+        return bookRepository.save(book);
     }
 
     @Override
-    public BookDto findBookById(long clubId) {
-        Book club = bookRepository.findById(clubId).get();
-        return mapToClubDto(club);
+    public BookDto findBookById(long bookId) {
+        Book book = bookRepository.findById(bookId).get();
+        return mapToBookDto(book);
     }
 
     @Override
-    public Book findBookModelById(long clubId) {
-        Book book = bookRepository.findById(clubId).get();
-        return book;
+    public Book findBookModelById(long bookId) {
+        return bookRepository.findById(bookId).get();
     }
 
 
     @Override
-    public void updateBook(BookDto clubDto) {
-        Book club = mapToClub(clubDto);
-        bookRepository.save(club);
+    public void updateBook(BookDto bookDto) {
+        Book book = mapToBook(bookDto);
+        bookRepository.save(book);
     }
 
     @Override
-    public void updateBookModel(Book club) {
-        bookRepository.save(club);
+    public void updateBookModel(Book book) {
+        bookRepository.save(book);
     }
 
     @Override
-    public void delete(long clubId) {
-        bookRepository.deleteById(clubId);
+    public void delete(long bookId) {
+        bookRepository.deleteById(bookId);
     }
 
     @Override
     public List<BookDto> searchBooks(String query) {
-        List<Book> clubs = bookRepository.searchBooks(query);
-        return clubs.stream().map(club -> mapToClubDto(club)).collect(Collectors.toList());
+        List<Book> books = bookRepository.searchBooks(query);
+        return books.stream().map(this::mapToBookDto).collect(Collectors.toList());
     }
 
     @Override
@@ -106,32 +107,33 @@ public class BookImpl implements BookService {
         return comment;
     }
 
-    private Book mapToClub(BookDto clubDto) {
+
+    private Book mapToBook(BookDto bookDto) {
         return Book.builder()
-                .id(clubDto.getId())  // Set the id from the dto
-                .author(clubDto.getAuthor())
-                .title(clubDto.getTitle())
-                .photoUrl(clubDto.getPhotoUrl())
-                .content(clubDto.getContent())
-                .price(clubDto.getPrice())
-                .demoVersion(clubDto.getDemoVersion())
-                .createdOn(clubDto.getCreatedOn())
-                .updatedOn(clubDto.getUpdatedOn())
+                .id(bookDto.getId())  // Set the id from the dto
+                .author(bookDto.getAuthor())
+                .title(bookDto.getTitle())
+                .photoUrl(bookDto.getPhotoUrl())
+                .content(bookDto.getContent())
+                .price(bookDto.getPrice())
+                .demoVersion(bookDto.getDemoVersion())
+                .createdOn(bookDto.getCreatedOn())
+                .updatedOn(bookDto.getUpdatedOn())
                 .build();
     }
 
-    private BookDto mapToClubDto(Book club) {
+    private BookDto mapToBookDto(Book book) {
 
         return BookDto.builder()
-                .id(club.getId())
-                .author(club.getAuthor())
-                .title(club.getTitle())
-                .photoUrl(club.getPhotoUrl())
-                .content(club.getContent())
-                .price(club.getPrice())
-                .demoVersion(club.getDemoVersion())
-                .createdOn(club.getCreatedOn())
-                .updatedOn(club.getUpdatedOn())
+                .id(book.getId())
+                .author(book.getAuthor())
+                .title(book.getTitle())
+                .photoUrl(book.getPhotoUrl())
+                .content(book.getContent())
+                .price(book.getPrice())
+                .demoVersion(book.getDemoVersion())
+                .createdOn(book.getCreatedOn())
+                .updatedOn(book.getUpdatedOn())
                 .build();
     }
 }

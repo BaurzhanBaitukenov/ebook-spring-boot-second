@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class CommentDto {
 
     private Long id;
-    private Book book;
+    private BookDto book;
     private String user;
     private String content;
     private LocalDateTime createdAt;

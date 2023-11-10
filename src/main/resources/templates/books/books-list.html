@@ -5,7 +5,7 @@
 
       layout:decorate="~{layout}">
 <head>
-    <title>Club List</title>
+    <title>Book List</title>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
@@ -23,27 +23,27 @@
             </div>
             <div class="row gx-5">
                 <div>
-                    <form th:action="@{/clubs/search}" class="form-inline my-2 my-lg-0 mb-3">
+                    <form th:action="@{/books/search}" class="form-inline my-2 my-lg-0 mb-3">
                         <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search books" aria-label="Search">
                     </form>
                 </div>
 <!--                <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{'/' + ${#authentication.principal.username} + '/book'}">Add to Cart</a>-->
-                <div th:each="club :${clubs}" class="col-lg-6 mb-2">
+                <div th:each="book :${books}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-3">
-                        <img class="img-fluid rounded-3 mb-3" th:src="${club.photoUrl}"/></br>
-                        <a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name</a></br>
-                        <p class="lead mb-0" th:text="${club.author}"></p>
-                        <p class="lead mb-0" th:text="${club.price} + ' KZT'"></p>
+                        <img class="img-fluid rounded-3 mb-3" th:src="${book.photoUrl}"/></br>
+                        <a th:text="${book.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name</a></br>
+                        <p class="lead mb-0" th:text="${book.author}"></p>
+                        <p class="lead mb-0" th:text="${book.price} + ' KZT'"></p>
                     </div>
-                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}" th:text="View">View</a>
+                    <a class="btn btn-primary" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="View">View</a>
 
                     <form method="post" th:action="@{/book/cart}" style="margin-top: 10px;">
                         <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
-                        <input type="hidden" name="bookId" th:value="${club.id}" />
+                        <input type="hidden" name="bookId" th:value="${book.id}" />
                         <button sec:authorize="isAuthenticated()" class="btn btn-primary" type="submit">Add to Cart</button>
                     </form>
 
-                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Edit</a>
+                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/books/{bookId}/edit(bookId=${book.id})}">Edit</a>
                 </div>
             </div>
         </div>
@@ -52,4 +52,5 @@
 
 </main>
 </body>
+
 </html>

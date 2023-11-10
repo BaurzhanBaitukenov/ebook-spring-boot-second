@@ -36,6 +36,13 @@ public class UserController {
         return "users/users-list";
     }
 
+    // delete user
+    @GetMapping("/users/{userId}/delete")
+    public String deleteUserById(@PathVariable("userId") long userId) {
+        userService.deleteUser(userId);
+        return "redirect:/users";
+    }
+
 
     // user page detail
     @GetMapping("/profile/{username}")
@@ -67,7 +74,7 @@ public class UserController {
         ShoppingCart cart = cartService.findShoppingCartByUserName(username);
 
         model.addAttribute("carts", cart);
-        return "clubs/shopping-cart";
+        return "books/shopping-cart";
     }
 
 
@@ -79,10 +86,10 @@ public class UserController {
 
         try {
             cartService.addItemToCart(shoppingCartId, bookId);
-            return "redirect:/clubs";
+            return "redirect:/books";
         } catch (IllegalArgumentException e) {
             redirectAttributes.addAttribute("error", "true");
-            return "redirect:/clubs";
+            return "redirect:/books";
         }
     }
 
@@ -92,7 +99,7 @@ public class UserController {
     public String deleteFromCart(@RequestParam("shoppingCartId") long shoppingCartId,
                                  @RequestParam("bookId") long bookId) {
         cartService.deleteItemFromCart(shoppingCartId, bookId);
-        return "redirect:/clubs";
+        return "redirect:/books";
     }
 
 

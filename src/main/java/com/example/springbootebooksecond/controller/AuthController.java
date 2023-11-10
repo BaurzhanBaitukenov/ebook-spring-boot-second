@@ -28,6 +28,7 @@ public class AuthController {
         return "registerAndLogin/register";
     }
 
+
     @PostMapping("/register/save")
     public String register(HttpSession session, @Valid @ModelAttribute("user") RegistrationDto user,
                            BindingResult result, Model model) {

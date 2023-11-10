@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/clubs")
+@RequestMapping("/books")
 @AllArgsConstructor
 public class BookController {
 
@@ -28,83 +28,83 @@ public class BookController {
 
     @GetMapping
     private String listBooks(Model model) {
-        List<BookDto> clubs = bookService.findAllBooks();
+        List<BookDto> books = bookService.findAllBooks();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         ShoppingCart cart = cartService.findShoppingCartByUserName(username);
 
         model.addAttribute("carts", cart);
-        model.addAttribute("clubs", clubs);
-        return "clubs/clubs-list";
+        model.addAttribute("books", books);
+        return "books/books-list";
     }
 
     //create
     @GetMapping("/new")
     public String createBookForm(Model model) {
-        Book club = new Book();
-        model.addAttribute("club", club);
-        return "clubs/clubs-create";
+        Book book = new Book();
+        model.addAttribute("book", book);
+        return "books/books-create";
     }
 
     @PostMapping("/new")
-    public String saveBook(@ModelAttribute("club") BookDto clubDto) {
-        bookService.saveBook(clubDto);
-        return "redirect:/clubs";
+    public String saveBook(@ModelAttribute("book") BookDto bookDto) {
+        bookService.saveBook(bookDto);
+        return "redirect:/books";
     }
 
     //update
-    @GetMapping("/{clubId}/edit")
-    public String editBookForm(@PathVariable("clubId") long clubId, Model model) {
-        Book club = bookService.findBookModelById(clubId);
-        model.addAttribute("club", club);
-        return "clubs/clubs-edit";
+    @GetMapping("/{bookId}/edit")
+    public String editBookForm(@PathVariable("bookId") long bookId, Model model) {
+        Book book = bookService.findBookModelById(bookId);
+        model.addAttribute("book", book);
+        return "books/books-edit";
     }
 
 
-    @PostMapping("/{clubId}/edit")
-    public String editBook(@PathVariable("clubId") long clubId,
-                           @Valid @ModelAttribute("club") Book club,
+    @PostMapping("/{bookId}/edit")
+    public String editBook(@PathVariable("bookId") long bookId,
+                           @Valid @ModelAttribute("book") Book book,
                            BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "clubs/clubs-edit";
+            return "books/books-edit";
         }
-        club.setId(clubId);
-        bookService.updateBookModel(club);
-        return "redirect:/clubs";
+        book.setId(bookId);
+        bookService.updateBookModel(book);
+        return "redirect:/books";
     }
 
     //Detail Page
-    @GetMapping("/{clubId}")
-    public String bookDetail(@PathVariable("clubId") long clubId, Model model) {
+    @GetMapping("/{bookId}")
+    public String bookDetail(@PathVariable("bookId") long bookId, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         ShoppingCart cart = cartService.findShoppingCartByUserName(username);
 
         model.addAttribute("carts", cart);
 
-        BookDto clubDto = bookService.findBookById(clubId);
-        model.addAttribute("club", clubDto);
+        BookDto bookDto = bookService.findBookById(bookId);
+        model.addAttribute("book", bookDto);
 
 
-        List<Comment> comments = bookService.getCommentsByBookId(clubId);
+        List<Comment> comments = bookService.getCommentsByBookId(bookId);
         model.addAttribute("comments", comments);
-        return "clubs/clubs-detail";
+        return "books/books-detail";
     }
 
     //Delete
-    @GetMapping("/{clubId}/delete")
-    public String deleteBook(@PathVariable("clubId") long clubId) {
-        bookService.delete(clubId);
-        return "redirect:/clubs";
+    @GetMapping("/{bookId}/delete")
+    public String deleteBook(@PathVariable("bookId") long bookId) {
+        bookService.delete(bookId);
+        return "redirect:/books";
     }
 
     //searching
     @GetMapping("/search")
     public String searchBook(@RequestParam(value = "query") String query, Model model) {
-        List<BookDto> clubs = bookService.searchBooks(query);
-        model.addAttribute("clubs", clubs);
-        return "clubs/clubs-list";
+        List<BookDto> books = bookService.searchBooks(query);
+        model.addAttribute("books", books);
+        return "books/books-list";
     }
 
 }

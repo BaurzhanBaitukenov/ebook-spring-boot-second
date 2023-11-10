@@ -4,5 +4,5 @@ import com.example.springbootebooksecond.models.Book;
 import com.example.springbootebooksecond.models.ShoppingCart;
 
 public interface ShoppingCartService {
-    ShoppingCart createShoppingCart(String userEmail);
+    ShoppingCart createShoppingCart(String email);
 }

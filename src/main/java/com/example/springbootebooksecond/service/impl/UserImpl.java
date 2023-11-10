@@ -55,6 +55,10 @@ public class UserImpl implements UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Override
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
+    }
 
 
     public RegistrationDto mapper(UserEntity userEntity) {

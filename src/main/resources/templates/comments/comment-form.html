@@ -5,7 +5,7 @@
 
       layout:decorate="~{layout}">
 <head>
-    <title>Club List</title>
+    <title>Comment Form</title>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
@@ -13,7 +13,7 @@
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
         <h1>Leave a review of the book</h1>
-        <form th:action="@{/clubs/{bookId}/comments/new(bookId=${bookId})}" method="post">
+        <form th:action="@{/books/{bookId}/comments/new(bookId=${bookId})}" method="post">
             <input type="hidden" name="id" th:value="${comment.id}" />
 <!--            <p>Book: <input type="text" th:field="${book.title}" /></p>-->
 <!--            <p>User: <input type="text" th:field="*{user.username}" /></p>-->

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,4 +34,26 @@ public class Comment {
     private LocalDateTime createdAt;
 
     private Integer likes = 0;
+
+    @ManyToMany
+    @JoinTable(
+            name = "comment_likes",
+            joinColumns = @JoinColumn(name = "comment_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<UserEntity> likesByUsers = new ArrayList<>();
+
+    public void addLike(UserEntity user) {
+        likesByUsers.add(user);
+        likes = likesByUsers.size();
+    }
+
+    public void removeLike(UserEntity user) {
+        likesByUsers.remove(user);
+        likes = likesByUsers.size();
+    }
+
+    public Integer getLikesCount() {
+        return likesByUsers.size();
+    }
 }

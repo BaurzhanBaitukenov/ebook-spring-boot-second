@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class BookToShoppingCartImpl implements BookToShoppingCartService {
 
     private final BookToShoppingCartRepository bookToShoppingCartRepository;
-    private final BookRepository bookRepository;
 
     @Override
     public BookToShoppingCart findBookById(long id) {

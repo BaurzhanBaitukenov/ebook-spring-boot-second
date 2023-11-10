@@ -31,6 +31,7 @@ public class CartImpl implements CartService {
     public ShoppingCart addItemToCart(long shoppingCartId, long bookId) {
         ShoppingCart shoppingCart = cartRepository.findById(shoppingCartId)
                 .orElseThrow(() -> new RuntimeException("Shopping cart not found"));
+
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 

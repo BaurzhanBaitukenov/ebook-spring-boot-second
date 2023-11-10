@@ -157,6 +157,21 @@ ALTER TABLE IF EXISTS public.comments
     OWNER to postgres;
 
 
+CREATE TABLE comment_likes (
+    id SERIAL PRIMARY KEY,
+    comment_id BIGINT REFERENCES comments(id),
+    user_id BIGINT REFERENCES users(id)
+);
+
+
+ALTER TABLE public.comment_likes
+    ADD CONSTRAINT comment_likes_comments_fk
+        FOREIGN KEY (comment_id)
+            REFERENCES public.comments (id)
+            ON UPDATE NO ACTION
+            ON DELETE CASCADE; -- Choose the appropriate action for deletion
+
+
 -- -- Table: public.users
 --
 -- -- DROP TABLE IF EXISTS public.users;

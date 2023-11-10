@@ -5,14 +5,14 @@
 
       layout:decorate="~{layout}">
 <head>
-    <title>Club List</title>
+    <title>Comment Edit</title>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
 
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
-        <form role="form" method="post" th:action="@{/clubs/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}" th:object="${comment}">
+        <form role="form" method="post" th:action="@{/books/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}" th:object="${comment}">
             <input type="hidden" th:field="*{id}">
             <div class="container">
                 <div class="card my-10">
