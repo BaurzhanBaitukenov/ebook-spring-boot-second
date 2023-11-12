@@ -8,6 +8,8 @@ import com.example.springbootebooksecond.repository.BookRepository;
 import com.example.springbootebooksecond.repository.BookToShoppingCartRepository;
 import com.example.springbootebooksecond.repository.CommentRepository;
 import com.example.springbootebooksecond.service.BookService;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class BookImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookToShoppingCartRepository bookToShoppingCartRepository;
     private final CommentRepository commentRepository;
+    private EntityManager entityManager;
 
     @Override
     public List<BookDto> findAllBooks() {
@@ -105,6 +108,11 @@ public class BookImpl implements BookService {
         bookRepository.save(book);
 
         return comment;
+    }
+
+    @Transactional
+    public void deleteBookById(long bookId) {
+        entityManager.remove(entityManager.getReference(Book.class, bookId));
     }
 
 

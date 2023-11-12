@@ -11,28 +11,84 @@
 
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
-        <div class="row">
-            <div class="col-md-4">
-                <!-- Profile Card -->
-                <div class="card">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx9tjaExsY-srL4VsHNE_OKGVCJ-eIFNBktw&usqp=CAU" class="card-img-top" alt="Profile Image">
-                </div>
-            </div>
-            <div class="col-md-8">
-                <!-- Profile Details -->
-                <div class="card" style="display: inline;">
-                    <div class="card-body">
-                        <h5 class="card-title">Profile Details</h5>
-                        <p class="card-text">
-                            <strong>Username:</strong> <span th:text="${user.username}">exampleEmail</span><br>
-                            <strong>Email:</strong> <span th:text="${user.email}">exampleEmail</span><br>
-                            <strong>Role:</strong> <span th:each="role : ${user.roles}" th:text="${role.name}"></span><br><br>
-                            <li sec:authorize="isAuthenticated()" class="nav-item"><a class="btn btn-primary" th:href="@{'/book/' + ${#authentication.principal.username}}">Cart</a></li>
-                        </p>
+        <div class="container py-5 h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                      <div class="col col-lg-9 col-xl-7">
+                        <div class="card">
+                          <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+                            <div class="ms-4 mt-5 d-flex flex-column align-items-center" style="width: 150px;">
+
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU"
+                                  alt="Default Profile Picture" class="img-fluid img-thumbnail"
+                                  style="width: 150px; height: 150px; object-fit: cover"/>
+
+<!--                                 <img th:if="${user.photourl != null}" th:src="${user.photourl}" -->
+<!--                                      alt="User's Profile Picture" class="img-fluid img-thumbnail" -->
+<!--                                      style="width: 150px; height: 150px; object-fit: cover"/> -->
+<!--                                 <img th:if="${user.photourl == null || user.photourl.isEmpty()}" -->
+<!--                                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU" -->
+<!--                                      alt="Default Profile Picture" class="img-fluid img-thumbnail" -->
+<!--                                      style="width: 150px; height: 150px; object-fit: cover"/> -->
+
+                                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                                        style="margin-top: 10px;">
+                                    Edit profile
+                                </button>
+                            </div>
+
+                            <div class="ms-3" style="margin-top: 130px;">
+                              <h5 th:text="${user.username}">name</h5>
+                              <p th:text="${user.email}">email</p>
+                            </div>
+
+                          </div>
+
+
+                          <div class="p-4 text-black" style="background-color: #f8f9fa;">
+                            <div class="d-flex justify-content-end text-center py-1">
+
+                              <div class="px-3">
+                                <p class="mb-1 h5">0</p>
+                                <p class="small text-muted mb-0">Followers</p>
+                              </div>
+
+                              <div>
+                                <p class="mb-1 h5">0</p>
+                                <p class="small text-muted mb-0">Following</p>
+                              </div>
+
+                              <div>
+                                  <p class="mb-1 h5" th:text="${totalLikes}">0</p>
+                                  <p class="small text-muted mb-0">Likes</p>
+                              </div>
+
+                            </div>
+                          </div>
+
+
+                          <div class="card-body p-4 text-black">
+                            <div class="mb-5">
+                              <p class="lead fw-normal mb-1">About</p>
+                              <div class="p-4" style="background-color: #f8f9fa;">
+                                <strong>Username:</strong> <span th:text="${user.username}"></span><br><br>
+                                <strong>Email:</strong> <span th:text="${user.email}"></span><br><br>
+<!--                                 <strong>Role:</strong> <span th:each="role : ${user.roles}" th:text="${role.name}"></span><br><br> -->
+                              </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                              <p class="lead fw-normal mb-0">Recent added books</p>
+                            </div>
+                            <div class="row g-2">
+                              <div class="col mb-2">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp"
+                                  alt="image 1" class="w-50 rounded-3">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                  </div>
     </section>
 
 

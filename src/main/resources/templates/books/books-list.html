@@ -2,55 +2,94 @@
       xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://thymeleaf.org"
-
       layout:decorate="~{layout}">
 <head>
     <title>Book List</title>
+    <style>
+            .card {
+                margin: 0;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 0.25rem;
+                width: 300px;
+                height: 300px;
+            }
+            .img-thumbnail {
+                width: 50%;
+                height: 50%;
+                margin: auto;
+                display: block;
+            }
+            .card:hover {
+                transform: scale(1.02);
+                transition: transform 0.2s ease-in-out;
+                cursor: pointer;
+            }
+            .search-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-bottom: 50px;
+            }
+            .search-form {
+                width: 100%;
+                max-width: 400px;
+                display: flex;
+                align-items: center;
+            }
+        </style>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
 
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
+
         <div th:if="${param.error}" class="alert alert-danger">
-            This book already in cart!
+            This book is already in the cart!
         </div>
+
         <div class="container px-5 my-5">
             <div class="text-center mb-5">
-                <li sec:authorize="isAuthenticated()" class="nav-item"><a class="btn btn-primary" th:href="@{'/book/' + ${#authentication.principal.username}}">Cart</a></li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a class="btn btn-primary" th:href="@{'/book/' + ${#authentication.principal.username}}">Cart</a></li>
                 <h1 class="fw-bolder">Ebook</h1>
                 <p class="lead fw-normal text-muted mb-0">Find any books</p>
             </div>
+
             <div class="row gx-5">
                 <div>
                     <form th:action="@{/books/search}" class="form-inline my-2 my-lg-0 mb-3">
                         <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search books" aria-label="Search">
                     </form>
                 </div>
-<!--                <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{'/' + ${#authentication.principal.username} + '/book'}">Add to Cart</a>-->
+
                 <div th:each="book :${books}" class="col-lg-6 mb-2">
                     <div class="position-relative mb-3">
-                        <img class="img-fluid rounded-3 mb-3" th:src="${book.photoUrl}"/></br>
-                        <a th:text="${book.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name</a></br>
-                        <p class="lead mb-0" th:text="${book.author}"></p>
-                        <p class="lead mb-0" th:text="${book.price} + ' KZT'"></p>
+                        <div class="card text-center h-100">
+
+                            <img class="img-thumbnail" th:src="${book.photoUrl}" alt="Book Image">
+                            <div class="card-body">
+                                <h5 th:text="${book.title}" class="card-title"></h5>
+                                <p th:text="'By ' + ${book.author}" class="card-text"></p>
+                                <p th:text="'Price: $' + ${book.price}" class="card-text font-weight-bold"></p>
+                                 <a class="btn btn-warning w-100" th:href="@{/books/{booksId}(booksId=${book.id})}">View</a>
+
+                                 <form method="post" th:action="@{/book/cart}" style="margin-top: 10px;">
+                                     <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
+                                     <input type="hidden" name="bookId" th:value="${book.id}" />
+                                     <button sec:authorize="isAuthenticated()" class="btn btn-warning w-100" type="submit">Add to Cart</button>
+                                 </form>
+
+                           </div>
+                        </div>
                     </div>
-                    <a class="btn btn-primary" th:href="@{/books/{bookId}(bookId=${book.id})}" th:text="View">View</a>
 
-                    <form method="post" th:action="@{/book/cart}" style="margin-top: 10px;">
-                        <input type="hidden" name="shoppingCartId" th:value="${carts != null ? carts.id : 0}" />
-                        <input type="hidden" name="bookId" th:value="${book.id}" />
-                        <button sec:authorize="isAuthenticated()" class="btn btn-primary" type="submit">Add to Cart</button>
-                    </form>
 
-                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="btn btn-primary" th:href="@{/books/{bookId}/edit(bookId=${book.id})}">Edit</a>
                 </div>
             </div>
         </div>
     </section>
 
-
 </main>
 </body>
-
 </html>
