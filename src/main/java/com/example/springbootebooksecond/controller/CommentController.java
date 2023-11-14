@@ -32,6 +32,7 @@ public class CommentController {
     @GetMapping
     public String getAllCommentsForBook(@PathVariable("bookId") Long bookId, Model model) {
         List<Comment> comments = bookService.getCommentsByBookId(bookId);
+
         model.addAttribute("comments", comments);
         return "comments/comment-list";
     }
@@ -101,31 +102,19 @@ public class CommentController {
     }
 
     @PostMapping("/{commentId}/like")
-    public String likeComment(@PathVariable Long bookId, @PathVariable("commentId") Long commentId,
-                              RedirectAttributes redirectAttributes) {
+    public String likeComment(@PathVariable Long bookId, @PathVariable Long commentId, RedirectAttributes redirectAttributes) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        Comment comment = commentService.findCommentById(commentId);
-        UserEntity user = userService.findByUsername(username);
+        commentService.addLike(commentId, username);
 
-        // Check if the user has already liked the comment
-        if (comment.getLikesByUsers().contains(user)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "You've already liked this comment.");
-        } else {
-            // User has not liked the comment yet, proceed with liking
-            comment.addLike(user);
-            commentService.updateComment(comment); // Update the comment with the new like
-            redirectAttributes.addFlashAttribute("successMessage", "Comment liked successfully");
-        }
-
+        redirectAttributes.addFlashAttribute("successMessage", "Comment liked successfully");
         return "redirect:/books/" + bookId;
     }
 
     @PostMapping("/{commentId}/unlike")
-    public String unlikeComment(@PathVariable Long bookId, @PathVariable("commentId") Long commentId,
-                                RedirectAttributes redirectAttributes) {
+    public String unlikeComment(@PathVariable Long bookId, @PathVariable Long commentId, RedirectAttributes redirectAttributes) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -135,6 +124,10 @@ public class CommentController {
         redirectAttributes.addFlashAttribute("successMessage", "Comment unliked successfully");
         return "redirect:/books/" + bookId;
     }
+
+
+
+
 
 
 }

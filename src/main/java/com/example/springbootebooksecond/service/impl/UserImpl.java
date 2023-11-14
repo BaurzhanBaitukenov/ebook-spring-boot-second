@@ -26,7 +26,6 @@ public class UserImpl implements UserService {
     private final ShoppingCartService shoppingCartService;
 
 
-
     @Override
     public List<UserEntity> findAllUsers() {
         List<UserEntity> users = userRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
@@ -58,6 +57,14 @@ public class UserImpl implements UserService {
     @Override
     public void deleteUser(long id) {
         userRepository.deleteById(id);
+    }
+
+    public UserEntity getUserByEmail(String userEmail) {
+        UserEntity user = userRepository.findByEmail(userEmail);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found with email: " + userEmail);
+        }
+        return user;
     }
 
 

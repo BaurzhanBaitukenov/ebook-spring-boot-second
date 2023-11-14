@@ -43,6 +43,7 @@ public class Comment {
     )
     private List<UserEntity> likesByUsers = new ArrayList<>();
 
+
     public void addLike(UserEntity user) {
         likesByUsers.add(user);
         likes = likesByUsers.size();
@@ -51,9 +52,5 @@ public class Comment {
     public void removeLike(UserEntity user) {
         likesByUsers.remove(user);
         likes = likesByUsers.size();
-    }
-
-    public Integer getLikesCount() {
-        return likesByUsers.size();
     }
 }

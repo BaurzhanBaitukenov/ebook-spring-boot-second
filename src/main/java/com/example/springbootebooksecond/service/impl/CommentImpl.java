@@ -6,6 +6,7 @@ import com.example.springbootebooksecond.repository.BookRepository;
 import com.example.springbootebooksecond.repository.CommentRepository;
 import com.example.springbootebooksecond.repository.UserRepository;
 import com.example.springbootebooksecond.service.CommentService;
+import com.example.springbootebooksecond.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class CommentImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
     private final BookRepository bookRepository;
 
     @Override
@@ -66,6 +68,9 @@ public class CommentImpl implements CommentService {
         comment.removeLike(user);
         commentRepository.save(comment);
     }
+
+
+
 
 
 
