@@ -51,11 +51,16 @@ public class CommentImpl implements CommentService {
                 () -> new IllegalArgumentException("Comment not found with ID: " + commentId)
         );
 
-        UserEntity user = userRepository.findByEmail(userEmail); // Replace with your actual user retrieval logic
+        UserEntity user = userRepository.findByEmail(userEmail);
 
-        comment.addLike(user);
-        commentRepository.save(comment);
+        if (!comment.getLikesByUsers().contains(user)) {
+            comment.addLike(user);
+            commentRepository.save(comment);
+        } else {
+            throw new IllegalStateException("User has already liked this comment.");
+        }
     }
+
 
     @Override
     public void removeLike(Long commentId, String userEmail) {
@@ -68,22 +73,6 @@ public class CommentImpl implements CommentService {
         comment.removeLike(user);
         commentRepository.save(comment);
     }
-
-
-
-
-
-
-
-//    @Override
-//    public void incrementLikes(Long commentId) {
-//        Comment comment = commentRepository.findById(commentId).orElseThrow(
-//                () -> new IllegalArgumentException("Comment not found with ID: " + commentId)
-//        );
-//
-//        comment.setLikes(comment.getLikes() + 1);
-//        commentRepository.save(comment);
-//    }
 
 
 }

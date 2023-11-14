@@ -45,8 +45,10 @@ public class Comment {
 
 
     public void addLike(UserEntity user) {
-        likesByUsers.add(user);
-        likes = likesByUsers.size();
+        if (!likesByUsers.contains(user)) {
+            likesByUsers.add(user);
+            likes = likesByUsers.size();
+        }
     }
 
     public void removeLike(UserEntity user) {

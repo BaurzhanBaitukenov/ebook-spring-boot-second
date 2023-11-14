@@ -4,6 +4,7 @@ import com.example.springbootebooksecond.dto.RegistrationDto;
 import com.example.springbootebooksecond.models.Role;
 import com.example.springbootebooksecond.models.UserEntity;
 import com.example.springbootebooksecond.repository.BookRepository;
+import com.example.springbootebooksecond.repository.CommentLikeRepository;
 import com.example.springbootebooksecond.repository.RoleRepository;
 import com.example.springbootebooksecond.repository.UserRepository;
 import com.example.springbootebooksecond.service.ShoppingCartService;
@@ -24,6 +25,7 @@ public class UserImpl implements UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ShoppingCartService shoppingCartService;
+    private final CommentLikeRepository commentLikeRepository;
 
 
     @Override
@@ -57,6 +59,15 @@ public class UserImpl implements UserService {
     @Override
     public void deleteUser(long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public int getUserLikesCount(String userEmail) {
+        UserEntity user = userRepository.findByEmail(userEmail);
+        if (user != null) {
+            return commentLikeRepository.countByUserId(user.getId());
+        }
+        return 0;
     }
 
     public UserEntity getUserByEmail(String userEmail) {

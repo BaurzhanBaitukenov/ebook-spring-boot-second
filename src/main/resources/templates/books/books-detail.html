@@ -32,6 +32,10 @@
                         </div>
                     </div>
 
+
+
+<!--########################################COMMENT##################################################### -->
+
                     <div class="form-outline mb-4">
                         <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/new(bookId=${book.id})}">Write a Comment</a><br>
                     </div>
@@ -47,6 +51,7 @@
                                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQnfcK8aWadEUBLCnstq0gd7sBmsB33Tvcng&usqp=CAU" alt="avatar" width="25" height="25" />
                                                     <p class="small mb-0 ms-2" th:text="${comment.userEmail}">Martha</p>
                                                     <p class="small mb-0 ms-2" th:text="${comment.createdAt}">createdAt</p>
+                                                    <p class="small mb-0 ms-2" th:text="${comment.likes} + ' ' + 'likes'">likes</p>
                                                 </div>
                                             </div>
 
@@ -54,34 +59,58 @@
 
 
 
-                                            <!-- Like button -->
-                                            <form th:action="@{/books/{bookId}/comments/{commentId}/like(bookId=${bookId}, commentId=${comment.id})}" method="post">
-                                                <button type="submit">Like</button>
-                                            </form>
+                                            <!-- Like and Unlike buttons -->
+                                            <div class="btn-group" role="group">
+                                                <!-- Like button -->
+                                                <form th:action="@{/books/{bookId}/comments/{commentId}/like(bookId=${bookId}, commentId=${comment.id})}" method="post">
+                                                    <button type="submit" class="btn btn-outline-secondary">Like</button>
+                                                </form>
 
-                                            <!-- Unlike button -->
-                                            <form th:action="@{/books/{bookId}/comments/{commentId}/unlike(bookId=${bookId}, commentId=${comment.id})}" method="post">
-                                                <button type="submit">Unlike</button>
-                                            </form>
+                                                <!-- Unlike button -->
+                                                <form th:action="@{/books/{bookId}/comments/{commentId}/unlike(bookId=${bookId}, commentId=${comment.id})}" method="post">
+                                                    <button type="submit" class="btn btn-outline-secondary">Unlike</button>
+                                                </form>
+                                            </div>
+
+                                            <!-- Error message -->
+                                            <div th:if="${errorMessageCommentId == comment.id}" class="alert alert-warning" role="alert">
+                                                <p th:text="${errorMessage}"></p>
+                                            </div>
+
+                                            <!-- Delete and Update buttons -->
+                                            <div class="btn-group" role="group">
+                                                <!-- Delete button -->
+                                                <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/delete(bookId=${book.id}, commentId=${comment.id})}" th:if="${comment.userEmail} == ${#authentication.principal.username}">Delete Comment</a>
+
+                                                <!-- Update button -->
+                                                <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}" th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a>
+                                            </div>
 
 
 
 
+<!--                                              --><!-- Like button -->
+<!--                                             <form class="btn btn-outline-secondary" th:action="@{/books/{bookId}/comments/{commentId}/like(bookId=${bookId}, commentId=${comment.id})}" method="post"> -->
+<!--                                                 <button type="submit">Like</button> -->
+<!--                                             </form> -->
 
+<!--                                              --><!-- Unlike button -->
+<!--                                             <form class="btn btn-outline-secondary" th:action="@{/books/{bookId}/comments/{commentId}/unlike(bookId=${bookId}, commentId=${comment.id})}" method="post"> -->
+<!--                                                 <button type="submit">Unlike</button> -->
+<!--                                             </form> -->
 
-
-
-                                            <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/delete(bookId=${book.id}, commentId=${comment.id})}"
-                                               th:if="${comment.userEmail} == ${#authentication.principal.username}">Delete Comment</a>
-
-                                            <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}"
-                                               th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a>
-
-<!--                                             <div class="mt-3"> -->
-
-<!--                                                   --><!-- Display likes count -->
-<!--                                                  <span th:text="${comment.likedByUser != null ? 1 : 0}"></span> Likes -->
+<!--                                             <div th:if="${errorMessageCommentId == comment.id}" class="alert alert-warning" role="alert"> -->
+<!--                                                 <p th:text="${errorMessage}"></p> -->
 <!--                                             </div> -->
+
+
+
+<!--                                             <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/delete(bookId=${book.id}, commentId=${comment.id})}" -->
+<!--                                                th:if="${comment.userEmail} == ${#authentication.principal.username}">Delete Comment</a> -->
+
+<!--                                             <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}" -->
+<!--                                                th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a> -->
+
 
                                         </div>
                                     </div>
@@ -89,6 +118,8 @@
                             </div>
                         </div>
                     </div>
+
+<!--########################################COMMENT##################################################### -->
 
 
                     <!-- Nested row for non-featured blog posts-->
@@ -146,29 +177,6 @@
 
                         </div>
                     </div>
-
-<!--                    Comment section-->
-<!--                    <div class="card mb-4">-->
-<!--                        <div class="card-header">Leave a Comment About Book</div>-->
-<!--                        <div class="card-body">-->
-<!--                            <table>-->
-<!--                                <tr>-->
-<!--                                    <th>ID</th>-->
-<!--                                    <th>Book</th>-->
-<!--                                    <th>User</th>-->
-<!--                                    <th>Content</th>-->
-<!--                                    <th>Created At</th>-->
-<!--                                </tr>-->
-<!--                                <tr th:each="comment : ${comments}">-->
-<!--                                    <td th:text="${comment.id}"></td>-->
-<!--                                    <td th:text="${comment.book.title}"></td>-->
-<!--                                    <td th:text="${comment.userEmail}"></td>-->
-<!--                                        <td th:text="${comment.content}"></td>-->
-<!--                                    <td th:text="${comment.createdAt}"></td>-->
-<!--                                </tr>-->
-<!--                            </table>-->
-<!--                        </div>-->
-<!--                    </div>-->
 
                 </div>
             </div>

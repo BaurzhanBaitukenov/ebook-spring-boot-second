@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -32,6 +33,8 @@ public class CommentController {
     @GetMapping
     public String getAllCommentsForBook(@PathVariable("bookId") Long bookId, Model model) {
         List<Comment> comments = bookService.getCommentsByBookId(bookId);
+
+        comments.sort(Comparator.comparingInt(Comment::getLikes).reversed());
 
         model.addAttribute("comments", comments);
         return "comments/comment-list";
@@ -103,15 +106,17 @@ public class CommentController {
 
     @PostMapping("/{commentId}/like")
     public String likeComment(@PathVariable Long bookId, @PathVariable Long commentId, RedirectAttributes redirectAttributes) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
-        commentService.addLike(commentId, username);
-
-        redirectAttributes.addFlashAttribute("successMessage", "Comment liked successfully");
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            commentService.addLike(commentId, username);
+            redirectAttributes.addFlashAttribute("successMessage", "Comment liked successfully");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "You have already liked this comment");
+        }
         return "redirect:/books/" + bookId;
     }
+
 
     @PostMapping("/{commentId}/unlike")
     public String unlikeComment(@PathVariable Long bookId, @PathVariable Long commentId, RedirectAttributes redirectAttributes) {
@@ -124,10 +129,5 @@ public class CommentController {
         redirectAttributes.addFlashAttribute("successMessage", "Comment unliked successfully");
         return "redirect:/books/" + bookId;
     }
-
-
-
-
-
 
 }

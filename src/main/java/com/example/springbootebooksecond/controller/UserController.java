@@ -48,7 +48,11 @@ public class UserController {
     @GetMapping("/profile/{username}")
     public String getProfilePage(@PathVariable("username") String username, Model model) {
         UserEntity user = userService.findByEmail(username);
+        int likesCount = userService.getUserLikesCount(username);
+
         model.addAttribute("user", user);
+        model.addAttribute("likesCount", likesCount);
+
         return "users/user-profile";
     }
 
