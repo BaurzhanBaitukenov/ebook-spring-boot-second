@@ -10,6 +10,9 @@
 
     <!-- Page Content-->
     <section layout:fragment="body">
+        <div class="row">
+                    <!-- ... (content) ... -->
+
         <a class="btn btn-primary" th:href="@{/}">Go Back</a>
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
@@ -35,10 +38,27 @@
 
 
 <!--########################################COMMENT##################################################### -->
-
+<!--                     add comment -->
+                    <!-- Add comment -->
                     <div class="form-outline mb-4">
-                        <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/new(bookId=${book.id})}">Write a Comment</a><br>
+                        <!-- Use a modal or expandable section for comment form -->
+                        <a class="btn btn-outline-secondary" data-bs-toggle="collapse" href="#commentFormCollapse" role="button" aria-expanded="false" aria-controls="commentFormCollapse">
+                            Write a Comment
+                        </a>
+
+                        <div class="collapse mt-3" id="commentFormCollapse">
+                            <!-- Comment form -->
+                            <form th:action="@{/books/{bookId}/comments/new(bookId=${book.id})}" method="post">
+                                <div class="mb-3">
+                                    <label for="commentContent" class="form-label">Your Comment:</label>
+                                    <textarea class="form-control" id="commentContent" name="content" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                            </form>
+                        </div>
                     </div>
+
+<!--                     comment info -->
                     <div class="row d-flex justify-content-center" th:each="comment : ${comments}">
                         <div class="col-md-10 col-lg-12">
                             <div class="card shadow-0 border" style="background-color: #f0f2f5;">
@@ -85,33 +105,6 @@
                                                 <!-- Update button -->
                                                 <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}" th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a>
                                             </div>
-
-
-
-
-<!--                                              --><!-- Like button -->
-<!--                                             <form class="btn btn-outline-secondary" th:action="@{/books/{bookId}/comments/{commentId}/like(bookId=${bookId}, commentId=${comment.id})}" method="post"> -->
-<!--                                                 <button type="submit">Like</button> -->
-<!--                                             </form> -->
-
-<!--                                              --><!-- Unlike button -->
-<!--                                             <form class="btn btn-outline-secondary" th:action="@{/books/{bookId}/comments/{commentId}/unlike(bookId=${bookId}, commentId=${comment.id})}" method="post"> -->
-<!--                                                 <button type="submit">Unlike</button> -->
-<!--                                             </form> -->
-
-<!--                                             <div th:if="${errorMessageCommentId == comment.id}" class="alert alert-warning" role="alert"> -->
-<!--                                                 <p th:text="${errorMessage}"></p> -->
-<!--                                             </div> -->
-
-
-
-<!--                                             <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/delete(bookId=${book.id}, commentId=${comment.id})}" -->
-<!--                                                th:if="${comment.userEmail} == ${#authentication.principal.username}">Delete Comment</a> -->
-
-<!--                                             <a class="btn btn-outline-secondary" th:href="@{/books/{bookId}/comments/{commentId}/update(bookId=${book.id}, commentId=${comment.id})}" -->
-<!--                                                th:if="${comment.userEmail} == ${#authentication.principal.username}">Update Comment</a> -->
-
-
                                         </div>
                                     </div>
                                 </div>

@@ -1,12 +1,10 @@
 package com.example.springbootebooksecond.service.impl;
 
 import com.example.springbootebooksecond.dto.RegistrationDto;
+import com.example.springbootebooksecond.models.Comment;
 import com.example.springbootebooksecond.models.Role;
 import com.example.springbootebooksecond.models.UserEntity;
-import com.example.springbootebooksecond.repository.BookRepository;
-import com.example.springbootebooksecond.repository.CommentLikeRepository;
-import com.example.springbootebooksecond.repository.RoleRepository;
-import com.example.springbootebooksecond.repository.UserRepository;
+import com.example.springbootebooksecond.repository.*;
 import com.example.springbootebooksecond.service.ShoppingCartService;
 import com.example.springbootebooksecond.service.UserService;
 import lombok.AllArgsConstructor;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,7 +24,7 @@ public class UserImpl implements UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final ShoppingCartService shoppingCartService;
-    private final CommentLikeRepository commentLikeRepository;
+    private final CommentRepository commentRepository;
 
 
     @Override
@@ -62,13 +61,11 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public int getUserLikesCount(String userEmail) {
-        UserEntity user = userRepository.findByEmail(userEmail);
-        if (user != null) {
-            return commentLikeRepository.countByUserId(user.getId());
-        }
-        return 0;
+    public int countLikesForUser(String userEmail) {
+        Integer count = commentRepository.countLikesForUser(userEmail);
+        return Optional.ofNullable(count).orElse(0);
     }
+
 
     public UserEntity getUserByEmail(String userEmail) {
         UserEntity user = userRepository.findByEmail(userEmail);
