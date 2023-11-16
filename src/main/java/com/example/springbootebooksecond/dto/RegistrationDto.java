@@ -16,4 +16,5 @@ public class RegistrationDto {
     private String email;
     @NotEmpty
     private String password;
+    private int balance = 0;
 }

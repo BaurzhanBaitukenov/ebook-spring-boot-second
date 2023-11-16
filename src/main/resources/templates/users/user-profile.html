@@ -5,6 +5,53 @@
       layout:decorate="~{layout}">
 <head>
     <title>User Profile</title>
+    <style>
+            .button-28 {
+                appearance: none;
+                margin-bottom: 50px;
+                background-color: transparent;
+                border: 2px solid #1A1A1A;
+                border-radius: 15px;
+                box-sizing: border-box;
+                color: #3B3B3B;
+                cursor: pointer;
+                display: inline-block;
+                font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
+                    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                font-size: 16px;
+                font-weight: 600;
+                line-height: normal;
+                margin: 0;
+                min-height: 60px;
+                min-width: 0;
+                outline: none;
+                padding: 16px 24px;
+                text-align: center;
+                text-decoration: none;
+                transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                width: 100%;
+                will-change: transform;
+            }
+
+            .button-28:disabled {
+                pointer-events: none;
+            }
+
+            .button-28:hover {
+                color: #fff;
+                background-color: #1A1A1A;
+                box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+                transform: translateY(-2px);
+            }
+
+            .button-28:active {
+                box-shadow: none;
+                transform: translateY(0);
+            }
+        </style>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
@@ -14,6 +61,7 @@
         <div class="container py-5 h-100">
                     <div class="row d-flex justify-content-center align-items-center h-100">
                       <div class="col col-lg-9 col-xl-7">
+                        <a class="button-28" role="button" th:href="@{'/book/' + ${#authentication.principal.username}}">Cart</a>
                         <div class="card">
                           <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                             <div class="ms-4 mt-5 d-flex flex-column align-items-center" style="width: 150px;">
@@ -71,7 +119,8 @@
                               <div class="p-4" style="background-color: #f8f9fa;">
                                 <strong>Username:</strong> <span th:text="${user.username}"></span><br><br>
                                 <strong>Email:</strong> <span th:text="${user.email}"></span><br><br>
-<!--                                 <strong>Role:</strong> <span th:each="role : ${user.roles}" th:text="${role.name}"></span><br><br> -->
+                                <strong>Balance:</strong> <span th:text="${balance}"></span><br><br>
+
                               </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-4">

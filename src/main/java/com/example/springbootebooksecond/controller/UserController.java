@@ -49,10 +49,12 @@ public class UserController {
     public String getProfilePage(@PathVariable("username") String username, Model model) {
         UserEntity user = userService.findByEmail(username);
         int likesCount = userService.countLikesForUser(username);
+        int userBalance = user.getBalance();
+
 
         model.addAttribute("user", user);
         model.addAttribute("likesCount", likesCount);
-
+        model.addAttribute("balance", userBalance);
         return "users/user-profile";
     }
 

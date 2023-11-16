@@ -39,6 +39,7 @@ public class UserImpl implements UserService {
         userEntity.setUsername(registrationDto.getUsername());
         userEntity.setEmail(registrationDto.getEmail());
         userEntity.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        userEntity.setBalance(registrationDto.getBalance());
         Role role = roleRepository.findByName("USER");
         userEntity.setRoles(Arrays.asList(role));
         userRepository.save(userEntity);
@@ -81,7 +82,7 @@ public class UserImpl implements UserService {
             return null;
         }
 
-        RegistrationDto user = new RegistrationDto(userEntity.getId(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getPassword());
+        RegistrationDto user = new RegistrationDto(userEntity.getId(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getPassword(),userEntity.getBalance());
         return user;
     }
 }
