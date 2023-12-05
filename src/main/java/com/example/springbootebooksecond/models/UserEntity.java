@@ -26,13 +26,15 @@ public class UserEntity {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private List<Role> roles = new ArrayList<>();
+    private String profileImage;
 
     @Builder
-    public UserEntity(String username, String email, String password) {
+    public UserEntity(String username, String email, String password, String profileImage) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.balance = 0; // Set the default value for balance
+        this.profileImage = profileImage;
     }
 
 }

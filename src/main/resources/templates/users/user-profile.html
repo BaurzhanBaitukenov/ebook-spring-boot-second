@@ -66,17 +66,17 @@
                           <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                             <div class="ms-4 mt-5 d-flex flex-column align-items-center" style="width: 150px;">
 
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU"
-                                  alt="Default Profile Picture" class="img-fluid img-thumbnail"
-                                  style="width: 150px; height: 150px; object-fit: cover"/>
+<!--                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU" -->
+<!--                                   alt="Default Profile Picture" class="img-fluid img-thumbnail" -->
+<!--                                   style="width: 150px; height: 150px; object-fit: cover"/> -->
 
-<!--                                 <img th:if="${user.photourl != null}" th:src="${user.photourl}" -->
-<!--                                      alt="User's Profile Picture" class="img-fluid img-thumbnail" -->
-<!--                                      style="width: 150px; height: 150px; object-fit: cover"/> -->
-<!--                                 <img th:if="${user.photourl == null || user.photourl.isEmpty()}" -->
-<!--                                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU" -->
-<!--                                      alt="Default Profile Picture" class="img-fluid img-thumbnail" -->
-<!--                                      style="width: 150px; height: 150px; object-fit: cover"/> -->
+                                <img th:if="${user.profileImage != null}" th:src="${user.profileImage}"
+                                     alt="User's Profile Picture" class="img-fluid img-thumbnail"
+                                     style="width: 150px; height: 150px; object-fit: cover"/>
+                                <img th:if="${user.profileImage == null or user.profileImage.isEmpty()}"
+                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHXi6kWCo1P3qJAuOnEAs6jWS1Dg1BqRkk8Q&usqp=CAU"
+                                     alt="Default Profile Picture" class="img-fluid img-thumbnail"
+                                     style="width: 150px; height: 150px; object-fit: cover"/>
 
                                 <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
                                         style="margin-top: 10px;">

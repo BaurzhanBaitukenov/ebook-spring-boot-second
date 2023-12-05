@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +43,12 @@ public class UserImpl implements UserService {
         userEntity.setBalance(registrationDto.getBalance());
         Role role = roleRepository.findByName("USER");
         userEntity.setRoles(Arrays.asList(role));
+        userEntity.setProfileImage(registrationDto.getProfileImage());
+
         userRepository.save(userEntity);
         shoppingCartService.createShoppingCart(userEntity.getEmail());
     }
+
 
     @Override
     public UserEntity findByEmail(String email) {
@@ -82,7 +86,7 @@ public class UserImpl implements UserService {
             return null;
         }
 
-        RegistrationDto user = new RegistrationDto(userEntity.getId(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getPassword(),userEntity.getBalance());
+        RegistrationDto user = new RegistrationDto(userEntity.getId(), userEntity.getUsername(), userEntity.getEmail(), userEntity.getPassword(),userEntity.getBalance(), userEntity.getProfileImage());
         return user;
     }
 }

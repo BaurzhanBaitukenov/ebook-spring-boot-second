@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -17,4 +18,6 @@ public class RegistrationDto {
     @NotEmpty
     private String password;
     private int balance = 0;
+    private String profileImage; // Change the type to byte[]
+
 }
